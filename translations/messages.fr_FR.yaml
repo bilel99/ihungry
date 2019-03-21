@@ -1,0 +1,66 @@
+#nav template
+nav.home: Accueil
+nav.contact: Contact
+nav.signIn: Connection
+nav.registration: Inscription
+nav.logout: Déconnection
+nav.profil: Profil
+nav.admin: Admin
+#footer template
+footer.contact-me: Nous contacter
+footer.copyright-part1: Copyright
+footer.copyright-part2: All rights reserved | Bilel Bekkouche
+#search template
+search.find: Chercher mon restaurant
+search.type: Type de restaurant
+search.address: Adresse du restaurant
+search.restaurant: Nom du restaurant
+search.submit: Valider ma recherche
+#featured template
+featured.subtitle: Vos restaurants
+featured.title: Les restaurants du moments
+featured.avg-price: prix moy.
+features.avis: avis
+featured.addToFav: ajout au favorie
+#testimonal template
+testimonal.subtitle: Vos avis
+testimonal.title: Merci à vous
+#owlCarousel template
+owlCarousel.subtitle: Découvrez & Réservez les meilleurs restaurants
+owlCarousel.title: au meilleur prix
+#home template
+home.title: Page d'accueil
+home.feedback: Me contacter
+home.return.back: Retour
+#contact template
+contact.submit: Envoyer
+contact.title: Me contacter
+contact.subtitle: Nous sommes là pour vous aider !
+contact.success: Félicitation votre demande de contact a bien été envoyée, notre service vous contactera d'ici peu
+contact.error: Une erreur s'est produite pendant votre demande de contact, merci de bien vouloir réitérer votre demande ultérieurement
+contact.warning: Ouuuups, votre formulaire est incorrect!
+contact.questions: Foire au questions
+#login
+login.title: Connection
+login.intro: Je me connecte
+login.email: Email
+login.password: Mot de passe
+login.submit: Valider
+login.success: Bonjour,
+login.error: Ouuuups, le champ email est incorrect!
+#register
+register.title: Inscription
+register.intro: Je m'inscrit
+register.name: Nom
+register.firstname: Prénom
+register.email: Email
+register.password: Mot de passe
+register.submit: Valider
+register.success: Félicitations, votre inscription s'est déroulé avec succès
+#messages generic
+success-message: Félicitation votre validation à fonctionner avec succès!
+error-message: Une erreur s'est produite pendant votre validation, veuillé réessayer ultérieurement!
+info-message: Pour information
+warning-message: Ouuuups
+#profil template
+profil.title: Profil

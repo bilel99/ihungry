@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'login.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ 'login.intro' | trans }}</h5>
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <form method="post" class="form-signin">
+                            <div class="form-group">
+                                <input type="email" id="inputEmail" name="email" class="form-control"
+                                       value="{{ last_username }}"
+                                       placeholder="{{ 'login.email' | trans }}"
+                                       required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" id="inputPassword" name="password" class="form-control"
+                                       placeholder="{{ 'login.password' | trans }}"
+                                       required>
+                            </div>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Remember me</label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase"
+                                    type="submit">{{ 'login.submit' | trans }}
+                            </button>
+                            <hr class="my-4">
+                            <a class="btn btn-lg btn-back-to-registered btn-block text-uppercase"
+                               href="{{ path('security.registration') }}"><i
+                                        class="fas fa-user-plus mr-2"></i> {{ 'register.intro' | trans }}
+                            </a>
+                            <a class="btn btn-lg btn-return-back-page btn-block text-uppercase"
+                               href="{{ path('homepage') }}"><i
+                                        class="fas fa-chevron-left mr-2"></i> {{ 'home.return.back' | trans }}
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+{% endblock %}

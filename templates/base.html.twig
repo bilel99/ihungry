@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <!-- Bootstrap 4 -->
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap/bootstrap.min.css') }}">
+        <!-- Font awesome cdn -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+              crossorigin="anonymous">
+        <!-- plugin IziToast (notify) -->
+        <link rel="stylesheet" href="{{ asset('plugins/izitoast/iziToast.min.css') }}">
+        <script src="{{ asset('plugins/izitoast/iziToast.min.js') }}"></script>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="{{ asset('front/css/main.css') }}">
+
+    {% endblock %}
+</head>
+<body>
+<main role="main">
+    <div class="iziToast-message">
+        {% include 'front/partials/success-alert.html.twig' %}
+        {% include 'front/partials/error-alert.html.twig' %}
+        {% include 'front/partials/warning-alert.html.twig' %}
+        {% include 'front/partials/info-alert.html.twig' %}
+    </div>
+
+    {% include 'front/partials/nav.html.twig' %}
+    {% block body %}{% endblock %}
+    {% include 'front/partials/footer.html.twig' %}
+</main>
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jQuery/jQuery.min.js') }}"></script>
+    <!-- jQuery UI -->
+    <script src="{{ asset('plugins/jQuery/jquery-ui.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <!-- custom javascript -->
+    <script src="{{ asset('front/js/app.js') }}"></script>
+
+{% endblock %}
+</body>
 </html>

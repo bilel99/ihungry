@@ -1,0 +1,9 @@
+name: Name
+firstname: Firstname
+email: Email
+password: Password
+repeat password: Repeat password
+contact.email: Your Email
+sujet: Your subject
+message: Your message
+contact.submit: Send

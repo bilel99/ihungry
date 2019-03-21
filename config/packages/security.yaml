@@ -1,24 +1,47 @@
 security:
+    #show error message
+    hide_user_not_found: false
+    #encoder
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        from_database:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    # Firewalls
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
+            provider: from_database
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                username_parameter: "email"
+                password_parameter: "password"
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path: security_logout
+                target: homepage
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            #remember_me:
+            #  secret:   '%kernel.secret%'
+            #  lifetime: 604800 # 1 week in seconds
+            #  path: /
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+    #- { path: '^/', roles: ROLE_USER }
+    #- { path: '^/admin', roles: ROLE_ADMIN }
+    #- { path: ^/admin, roles: ROLE_ADMIN }
+    #- { path: ^/profile, roles: ROLE_USER }

@@ -1,0 +1,8 @@
+user.name.not_blank: S'il vous plaît entrer un nom
+user.firstname.not_blank: S'il vous plaît entrer un prénom
+user.email.unique: Votre adresse email existe déjà
+user.email.not_blank: S'il vous plaît entrer un email
+user.email.not_email: Votre email est invalide
+user.password.not_blank: S'il vous plaît entrer un mot de passe
+user.password.min_length: Votre mot de passe doit contenir au moin 5 caractères
+user.password.password.fields.must.match: Les mot de passes doivent être identique

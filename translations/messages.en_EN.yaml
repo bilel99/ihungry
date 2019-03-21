@@ -1,0 +1,66 @@
+#nav template
+nav.home: Home
+nav.contact: Contact
+nav.signIn: Sign in
+nav.registration: Registration
+nav.logout: Sign out
+nav.profil: Profil
+nav.admin: Admin
+#footer template
+footer.contact-me: Nous contacter
+footer.copyright-part1: Copyright
+footer.copyright-part2: All rights reserved | Bilel Bekkouche
+#search template
+search.find: Find your restaurant
+search.type: Type of restaurant
+search.address: Address of restaurant
+search.restaurant: Name of restaurant
+search.submit: Validate my search
+#featured template
+featured.subtitle: Your restaurants
+featured.title: The Best Restaurants
+featured.avg-price: average price.
+features.avis: commented
+featured.addToFav: add to favorite
+#testimonal template
+testimonal.subtitle: Your comments
+testimonal.title: Clients testimonials
+#owlCarousel template
+owlCarousel.subtitle: Discover & Book the best restaurants
+owlCarousel.title: at the best price
+#home template
+home.title: Home page
+home.feedback: Feedback
+home.return.back: Return to back page
+#contact template
+contact.title: Contact me
+contact.subtitle: We are here to help you !
+contact.submit: Send
+contact.success: Congratulations your contact request has been sent, our service will contact you shortly
+contact.error: An error occurred during your contact request, please reiterate your request later
+contact.warning: Ouuuups, your form is incorrect!
+contact.questions: Foire au questions
+#login
+login.title: Log'in
+login.intro: Please sign in
+login.email: Email
+login.password: Password
+login.submit: Validate
+login.success: Hello,
+login.error: Email could not be found
+#register
+register.title: Registration
+register.intro: I Register
+register.name: Name
+register.firstname: Firstname
+register.email: Email
+register.password: Password
+register.submit: Validate
+register.success: Congratulations, your registration was successful
+#messages generic
+success-message: Congratulations on your validation to work successfully!
+error-message: An error occurred during your validation, please try again later!
+info-message: For information
+warning-message: Ouuuups
+#profil template
+profil.title: Profil
