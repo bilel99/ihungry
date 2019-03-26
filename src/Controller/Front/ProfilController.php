@@ -38,9 +38,6 @@ class ProfilController extends AbstractController
         $form = $this->createForm(ProfilType::class, $user);
         $form->handleRequest($request);
 
-        $updatePassword = $this->createForm(UpdatePasswordType::class, $user);
-        $updatePassword->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             // Update session User
@@ -57,40 +54,48 @@ class ProfilController extends AbstractController
             }
         }
 
-        if ($updatePassword->isSubmitted() && $updatePassword->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $validator = false;
-            if ($updatePassword['password']->getData() == $updatePassword['confirmPassword']->getData()) {
-                $validator = true;
-                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-                $em->persist($user);
-                $em->flush();
-                // Update session User
-                $this->get('session')->set('_security_main', $user);
-                $message = $this->translator->trans('profil.update.password.success');
-            } else {
-                $validator = false;
-                $message = $this->translator->trans('no.equals.password');
-            }
-
-            // AJAX
-            if ($request->isXmlHttpRequest()) {
-                $response = new JsonResponse();
-                return $response->setData([
-                    'message' => $message,
-                    'validator' => $validator
-                ]);
-            } else {
-                throw new \Exception($this->translator->trans('ajax.exceptionError'));
-            }
-        }
-
         return $this->render('front/profil/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'update_password' => $updatePassword->createView(),
             'current_menu' => 'profil'
         ]);
+    }
+
+    /**
+     * @Route("/update-password/{id}", name="profil.updatePassword")
+     * @param Request $request
+     * @param User $user
+     * @param UserPasswordEncoderInterface $encoder
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function updatePassword(Request $request, User $user, UserPasswordEncoderInterface $encoder)
+    {
+        $isValid = $request->request->get('password') == $request->request->get('confirmPassword');
+        if ($isValid) {
+            $em = $this->getDoctrine()->getManager();
+            $validator = true;
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $em->persist($user);
+            $em->flush();
+            // Update session User
+            $this->get('session')->set('_security_main', $user);
+            $message = $this->translator->trans('profil.update.password.success');
+        } else {
+            $validator = false;
+            $message = $this->translator->trans('no.equals.password');
+        }
+
+        // AJAX
+        if ($request->isXmlHttpRequest()) {
+            $response = new JsonResponse();
+            return $response->setData([
+                'message' => $message,
+                'validator' => $validator
+            ]);
+        } else {
+            throw new \Exception($this->translator->trans('ajax.exceptionError'));
+        }
     }
 
     /**

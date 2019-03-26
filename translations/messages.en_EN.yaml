@@ -56,6 +56,7 @@ oups: Ouuuuups
 login.access.denied: votre compte est actuellement désactivé, vous pouvez donc pas intéragir sur le site, vous avez actuellement un accès anonyme.
 login.access.denied2: Si vous voulez retrouver tous vos accès, merci de bien vouloir ré-activer votre compte sur votre profil!
 login.access.denied3: Réactiver mon compte
+repeat.password: Répèter votre mot de passe
 #register
 register.title: Registration
 register.intro: I Register
