@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'profil.title' | trans }}{% endblock %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- URL AJAX -->
+            <a href="{{ url('profil.refresh', {'id':user.id}) }}" id="url-profil-ajax" style="display: none;"></a>
+            <div class="top-page">
+                <div class="col-sm-4 col-md-4">
+                    <div class="profil-picture">
+                        <img style="text-align: center;" class="my-picture"
+                             src="{{ asset('front/images/image-profil-picture.jpg') }}" alt="my picture">
+                    </div>
+                </div>
+                <div class="offset-2 col-sm-10 col-md-10">
+                    <div class="profil-username">{{ user.firstname }} {{ user.name }}</div>
+                    <p class="profil-description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad animi assumenda delectus dicta
+                        ducimus error facere fuga iste laboriosam laborum provident quam quisquam repellat similique,
+                        temporibus vero voluptas voluptatem voluptates?
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            {# Profil - Settings - Include #}
+            <div class="col-sm-5 col-md-5">
+                {% include 'front/partials/profil-settings.html.twig' %}
+            </div>
+
+            <!-- Form -->
+            <div class="col-sm-7 col-md-7 mx-auto">
+                <div class="form-edit-profil" style="display: none;">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ 'profil.intro' | trans }}</h5>
+
+                            {{ form_start(form, {'attr':{'class':'form-signin', 'id': 'form-profil-edit'}}) }}
+                            <div class="form-group">
+                                {{ form_row(form.firstname) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(form.name) }}
+                            </div>
+                            <button id="update-profil" class="btn btn-lg btn-primary btn-block text-uppercase"
+                                    type="submit">{{ 'profil.submit' | trans }}
+                            </button>
+                            <hr class="my-4">
+                            <a class="btn btn-lg btn-return-back-page btn-block text-uppercase"
+                               href="{{ path('homepage') }}">
+                                <i class="fas fa-chevron-left mr-2"></i>
+                                {{ 'home.return.back' | trans }}
+                            </a>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+                {% include 'front/profil/edit-password.html.twig' %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{# Profil - Settings -  #}
+<div class="profil-menu">
+    <div class="fading-side-menu" data-spy="affix" data-offset-top="350">
+        <h5>{{ 'profil.settings' | trans }}</h5>
+        <hr class="no-margin">
+        <ul class="list-unstyled">
+            <li class="li-disable-account" style="display: none;">
+                <a href="">
+                    <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.my.favorite.restaurant' | trans }}
+                    <i class="fas fa-heart"></i>
+                </a>
+            </li>
+            <li class="li-disable-account" style="display: none;">
+                <a href="">
+                    <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.setting.my.comments' | trans }}
+                    <i class="fas fa-comments"></i>
+                </a>
+            </li>
+            <li class="li-disable-account" style="display: none;">
+                <a href="">
+                    <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.setting.my.posts' | trans }}
+                    <i class="fas fa-utensils"></i>
+                </a>
+            </li>
+
+            <!-- edit password toggle edit profil -->
+            <li id="li-edit-password" class="li-disable-account" style="display: none;">
+                <a href="" id="profil-edit-password">
+                    <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.change.password' | trans }}
+                    <i class="fas fa-key"></i>
+                </a>
+            </li>
+            <li id="li-edit-profil" style="display: none;">
+                <a href="" id="profil-edit-account">
+                    <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.edit.account' | trans }}
+                    <i class="fas fa-user-edit"></i>
+                </a>
+            </li>
+
+            <!-- disable account toggle enable account -->
+            <li class="li-disable-account" style="display: none;">
+                <form id="form-user-disable" action="{{ url('profil.disable', {'id':user.id}) }}" method="post">
+                    <a href="" id="disable-account">
+                        <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.disable.account' | trans }}
+                        <i class="fas fa-toggle-off"></i>
+                    </a>
+                </form>
+            </li>
+            <li class="li-enable-account" style="display: none;">
+                <form id="form-user-enable" action="{{ url('profil.enable', {'id':user.id}) }}" method="post">
+                    <a href="" id="enable-account">
+                        <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.enable.account' | trans }}
+                        <i class="fas fa-toggle-on"></i>
+                    </a>
+                </form>
+            </li>
+
+            <!-- delete account -->
+            <li class="li-delete-account" style="display: none;">
+                <form id="form-user-delete" action="{{ url('profil.delete', {'id': user.id}) }}" method="post">
+                    <a href="" id="delete-account">
+                        <span class="fa fa-angle-double-right text-primary"></span>{{ 'profil.delete.account' | trans }}
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>

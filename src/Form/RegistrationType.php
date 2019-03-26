@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,20 +41,23 @@ class RegistrationType extends AbstractType
                     'placeholder' => 'email'
                 ]
             ])
-            ->add('password', PasswordType::class, [
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'user.password.fields.must.match',
                 'required' => true,
-                'label' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'password'
-                ]
-            ])
-            ->add('confirm_password', PasswordType::class, [
-                'required' => true,
-                'label' => false,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'repeat password'
+                'first_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'password',
+                        'class' => 'form-group form-control'
+                    ]
+                ],
+                'second_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'repeat password',
+                        'class' => 'form-group form-control'
+                    ]
                 ]
             ]);
     }

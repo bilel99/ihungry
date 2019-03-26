@@ -9,9 +9,7 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{ 'login.intro' | trans }}</h5>
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
+                        {% include 'front/partials/error-alert-login.html.twig' %}
                         <form method="post" class="form-signin">
                             <div class="form-group">
                                 <input type="email" id="inputEmail" name="email" class="form-control"
@@ -40,8 +38,10 @@
                                         class="fas fa-user-plus mr-2"></i> {{ 'register.intro' | trans }}
                             </a>
                             <a class="btn btn-lg btn-return-back-page btn-block text-uppercase"
-                               href="{{ path('homepage') }}"><i
-                                        class="fas fa-chevron-left mr-2"></i> {{ 'home.return.back' | trans }}
+                               href="{{ path('homepage') }}">
+                                <i class="fas fa-chevron-left mr-2"></i>
+                                {{ 'home.return.back' | trans }}
+
                             </a>
                         </form>
                     </div>

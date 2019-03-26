@@ -16,6 +16,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable
 {
+    const ROLE_USER = [
+        'ROLE_USER'
+    ];
+
+    const ROLE_ADMIN = [
+        'ROLE_ADMIN'
+    ];
 
     /**
      * @ORM\Id()
@@ -58,9 +65,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min="5", minMessage="user.password.min_length")
-     * @Assert\NotBlank(message="user.password.not_blank")
-     * @Assert\EqualTo(propertyPath="confirm_password", message="user.password.password.fields.must.match")
      */
     private $password;
 
@@ -70,7 +74,7 @@ class User implements UserInterface, \Serializable
      * @var array
      * @ORM\Column(type="array")
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -295,18 +299,20 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        $roles = $this->roles;
-
-        if(empty($roles)){
+        if (empty($this->roles)) {
             return ['ROLE_USER'];
         }
 
-        return [$roles];
+        return $this->roles;
     }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
     public function setRoles(array $roles): User
     {
-        $this->$roles = $roles;
+        $this->roles = $roles;
         return $this;
     }
 

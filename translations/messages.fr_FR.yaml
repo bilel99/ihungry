@@ -6,10 +6,14 @@ nav.registration: Inscription
 nav.logout: Déconnection
 nav.profil: Profil
 nav.admin: Admin
+nav.welcome: Welcome
 #footer template
 footer.contact-me: Nous contacter
-footer.copyright-part1: Copyright
-footer.copyright-part2: All rights reserved | Bilel Bekkouche
+footer.row1: Découvrez-nous
+footer.row2: Besoin d'aide
+footer.row3: Suivez-nous
+footer.copy: All right Reversed.
+footer.me: By Bilel B
 #search template
 search.find: Chercher mon restaurant
 search.type: Type de restaurant
@@ -48,6 +52,10 @@ login.password: Mot de passe
 login.submit: Valider
 login.success: Bonjour,
 login.error: Ouuuups, le champ email est incorrect!
+oups: Ouuuuups
+login.access.denied: votre compte est actuellement désactivé, vous pouvez donc pas intéragir sur le site, vous avez actuellement un accès anonyme.
+login.access.denied2: Si vous voulez retrouver tous vos accès, merci de bien vouloir ré-activer votre compte sur votre profil!
+login.access.denied3: Réactiver mon compte
 #register
 register.title: Inscription
 register.intro: Je m'inscrit
@@ -64,3 +72,29 @@ info-message: Pour information
 warning-message: Ouuuups
 #profil template
 profil.title: Profil
+profil.intro: Mon profil
+profil.submit: Valider
+profil.settings: Paramétres
+profil.my.favorite.restaurant: Mes restaurants préférés
+profil.setting.my.comments: Administrer mes commentaires
+profil.setting.my.posts: Adminitrer mes posts
+profil.change.password: Modifier mon mot de passe
+profil.delete.account: Supprimer mon compte
+profil.disable.account: Désactiver mon compte
+profil.enable.account: Réactiver mon compte
+profil.account.enable: Votre compte a bien été réactiver
+profil.success: Votre profil à été modifié avec succès
+profil.error: Ouuups,
+profil.info: Pour information,
+profil.disable.success: Votre compte à bien été désactivé
+profil.delete.success: Votre compte à bien été supprimé
+profil.edit.password: Je change mon mot de passe
+profil.edit.account: Edition du profil
+profil.update.password.success: Votre mot de passe à été modifié avec succès
+profil.update.password.error: Ouuups, votre ancien mot de passe est incorrect
+no.equals.password: Les mot de passe doivent être identique
+ajax.exceptionError: Erreur lors de la requête Ajax, veuillé réessayer ultérieurement
+edit.password.oldpassword: Votre ancien mot de passe
+edit.password.password: Votre nouveau mot de passe
+edit.password.repeatpassword: Répèter votre mot de passe
+edit.password.success: Votre mot de passe à bien été modifié

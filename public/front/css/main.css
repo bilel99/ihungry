@@ -1,13 +1,20 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
+html {
+    height: 100%;
+}
 
 body {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
     color: #5a5a5a;
 }
 
+main {
+    margin-top: 56px; /* Debut de page après navbar */
+}
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
@@ -16,6 +23,7 @@ body {
 .carousel {
     margin-bottom: 4rem;
 }
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
     bottom: 3rem;
@@ -27,6 +35,7 @@ body {
     height: 32rem;
     background-color: #777;
 }
+
 .carousel-item > img {
     position: absolute;
     top: 0;
@@ -35,6 +44,11 @@ body {
     height: 32rem;
 }
 
+.user-is-not-actif {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+}
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
@@ -44,9 +58,11 @@ body {
     margin-bottom: 1.5rem;
     text-align: center;
 }
+
 .marketing h2 {
     font-weight: 400;
 }
+
 .marketing .col-lg-4 p {
     margin-right: .75rem;
     margin-left: .75rem;
@@ -67,7 +83,97 @@ body {
     letter-spacing: -.05rem;
 }
 
-/* Login
+/* Tooltip
+------------------------- */
+.custom-tooltip {
+    position: relative;
+}
+
+.custom-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.6s;
+}
+
+.custom-tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+}
+
+.custom-tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.bottom-arrow.tooltiptext {
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.bottom-arrow.tooltiptext::after {
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.top-arrow.tooltiptext {
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.top-arrow.tooltiptext::after {
+    bottom: 100%; /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+
+.left-arrow.tooltiptext {
+    top: 0;
+    left: 110%;
+    margin-left: 0;
+}
+
+.left-arrow.tooltiptext::after {
+    top: 50%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #555 transparent transparent;
+}
+
+.right-arrow.tooltiptext {
+    top: 0;
+    right: 110%;
+    margin-left: 0;
+}
+
+.right-arrow.tooltiptext::after {
+    top: 50%;
+    left: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #555;
+}
+
+/* Login / Register
 ------------------------- */
 .card-signin {
     border: 0;
@@ -94,6 +200,7 @@ body {
     color: white;
     background-color: #ea4335;
 }
+
 .btn-back-to-registered:hover {
     background-color: #c0392b;
     color: #fff;
@@ -103,9 +210,168 @@ body {
     color: white;
     background-color: #3b5998;
 }
+
 .btn-return-back-page:hover {
     background-color: #1e3799;
     color: #fff;
+}
+
+/* Profil page
+------------------------- */
+.top-page {
+    min-width: 100%;
+    height: 400px;
+    background-color: #27ae60;
+}
+
+.profil-username {
+    margin-top: -150px;
+    color: #fff;
+    font-size: 3em;
+    text-align: center;
+}
+
+.profil-description {
+    margin-top: 10px;
+    margin-left: 100px;
+    color: #fff;
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.profil-picture {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.my-picture {
+    width: 150px;
+    border: 10px solid #5eb5e0;
+    background-color: #fff;
+    border-radius: 100%;
+}
+
+.profil-menu {
+    margin-top: 40px;
+    font-size: 0.8em;
+}
+
+.fading-side-menu.affix-top {
+    opacity: 1;
+    transition: opacity 1s
+}
+
+.fading-side-menu.affix {
+    top: 11.5px;
+}
+
+.fading-side-menu.affix {
+    opacity: 0.2;
+    transition: opacity 5s
+}
+
+.fading-side-menu.affix:hover {
+    opacity: 1;
+    transition: opacity 0.3s
+}
+
+.fading-side-menu a {
+    color: rgb(102, 102, 102);
+}
+
+.fading-side-menu a .fa {
+    padding-right: 15px;
+}
+
+.no-margin {
+    margin: 0px !important;
+}
+
+/* Footer
+------------------------- */
+section {
+    padding: 60px 0;
+}
+
+section .section-title {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+}
+
+#footer {
+    background: #343A40;
+}
+
+#footer h5 {
+    padding-left: 10px;
+    border-left: 3px solid #eeeeee;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+#footer a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+
+#footer ul.social li {
+}
+
+#footer ul.social li a i {
+    margin-right: 5px;
+    font-size: 25px;
+    -webkit-transition: .5s all ease;
+    -moz-transition: .5s all ease;
+    transition: .5s all ease;
+}
+
+#footer ul.social li:hover a i {
+    font-size: 30px;
+    margin-top: -10px;
+}
+
+#footer ul.social li a,
+#footer ul.quick-links li a {
+    color: #ffffff;
+}
+
+#footer ul.social li a:hover {
+    color: #eeeeee;
+}
+
+#footer ul.quick-links li {
+    padding: 3px 0;
+    -webkit-transition: .5s all ease;
+    -moz-transition: .5s all ease;
+    transition: .5s all ease;
+}
+
+#footer ul.quick-links li:hover {
+    padding: 3px 0;
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+#footer ul.quick-links li a i {
+    margin-right: 5px;
+}
+
+#footer ul.quick-links li:hover a i {
+    font-weight: 700;
+}
+
+@media (max-width: 767px) {
+    #footer h5 {
+        padding-left: 0;
+        border-left: transparent;
+        padding-bottom: 0px;
+        margin-bottom: 10px;
+    }
 }
 
 
