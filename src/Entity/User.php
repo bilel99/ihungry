@@ -71,6 +71,11 @@ class User implements UserInterface, \Serializable
     private $confirm_password;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $secretpass;
+
+    /**
      * @var array
      * @ORM\Column(type="array")
      */
@@ -162,6 +167,18 @@ class User implements UserInterface, \Serializable
     public function setConfirmPassword($confirm_password)
     {
         $this->confirm_password = $confirm_password;
+        return $this;
+    }
+
+    public function getSecretpass(): ?string
+    {
+        return $this->secretpass;
+    }
+
+    public function setSecretpass(?string $secretpass): self
+    {
+        $this->secretpass = $secretpass;
+
         return $this;
     }
 

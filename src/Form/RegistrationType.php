@@ -41,6 +41,14 @@ class RegistrationType extends AbstractType
                     'placeholder' => 'email'
                 ]
             ])
+            ->add('secretpass', PasswordType::class, [
+                'required' => true,
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'secretpass'
+                ]
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'user.password.fields.must.match',

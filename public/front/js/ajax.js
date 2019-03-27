@@ -150,6 +150,70 @@ class Ajax {
         });
     }
 
+    updateSecretPass = async function () {
+        $('#update-secretpass').on('click', function (e) {
+            e.preventDefault();
+            let form = $('#form-profil-updateSecretpass');
+            let url = form.attr('action');
+            let data = form.serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function (result) {
+                    if (result.validator == true) {
+                        // Affichage du message
+                        $('.iziToast-message').append(
+                            iziToast.success({
+                                position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: '',
+                                backgroundColor: '',
+                                messageSize: '',
+                                messageColor: '',
+                                icon: 'fas fa-check',
+                                image: '',
+                                imageWidth: 50,
+                                balloon: true,
+                                drag: true,
+                                progressBar: true,
+                                timeout: 6000,
+                                title: 'Success',
+                                message: result.message
+                            })
+                        );
+                    } else {
+                        // Affichage du message
+                        $('.iziToast-message').append(
+                            iziToast.warning({
+                                position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                                progressBarColor: '',
+                                backgroundColor: '',
+                                messageSize: '',
+                                messageColor: '',
+                                icon: 'fas fa-check',
+                                image: '',
+                                imageWidth: 50,
+                                balloon: true,
+                                drag: true,
+                                progressBar: true,
+                                timeout: 6000,
+                                title: 'Ouuuups',
+                                message: result.message
+                            })
+                        );
+                    }
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
+            });
+        });
+    }
+
     /**
      * account enable, {/profil/{id}}
      * @returns {Promise<void>}

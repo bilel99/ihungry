@@ -9,3 +9,4 @@ message: Your message
 contact.submit: Send
 user.password.fields.must.match: The password fields must match
 old_password: Votre ancien mot de passe est incorrect
+secretpass: Mot secret

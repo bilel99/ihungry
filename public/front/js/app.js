@@ -5,6 +5,7 @@ let ajax = new Ajax();
 ajax.getRefreshProfil();
 ajax.updateProfil();
 ajax.updatePassword();
+ajax.updateSecretPass();
 ajax.accountDisable();
 ajax.accountEnable();
 ajax.deleteAccount();
@@ -22,11 +23,21 @@ $(document).ready(function () {
     );
 
 
-    // Show form edit password / edit profil
+    // Show form edit password / edit profil / edit secretpass /
+    $('#profil-edit-secretpass').on('click', function (e) {
+        e.preventDefault();
+        // Show form edit secretpass
+        $('.form-edit-profil').slideUp();
+        $('.form-edit-password').slideUp();
+        $('.form-edit-secretPass').slideDown();
+        // Change menu
+    });
+
     $('#profil-edit-password').on('click', function (e) {
         e.preventDefault();
         // show form edit password
         $('.form-edit-profil').slideUp();
+        $('.form-edit-secretPass').slideUp();
         $('.form-edit-password').slideDown();
         // Change menu
         $('#li-edit-password').slideUp();
@@ -37,6 +48,7 @@ $(document).ready(function () {
         e.preventDefault();
         // show form edit profil
         $('.form-edit-password').slideUp();
+        $('.form-edit-secretPass').slideUp();
         $('.form-edit-profil').slideDown();
         // Change menu
         $('#li-edit-profil').slideUp();

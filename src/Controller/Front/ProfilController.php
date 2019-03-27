@@ -4,7 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Form\ProfilType;
-use App\Form\UpdatePasswordType;
+use App\Notification\UpdateSecretPassNotification;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,8 +71,10 @@ class ProfilController extends AbstractController
      */
     public function updatePassword(Request $request, User $user, UserPasswordEncoderInterface $encoder)
     {
+        $secretPassword = sha1($request->request->get('secretpass'));
         $isValid = $request->request->get('password') == $request->request->get('confirmPassword');
-        if ($isValid) {
+        $isValidSecretPass = $secretPassword == $user->getSecretpass();
+        if ($isValid && $isValidSecretPass) {
             $em = $this->getDoctrine()->getManager();
             $validator = true;
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
@@ -83,7 +85,7 @@ class ProfilController extends AbstractController
             $message = $this->translator->trans('profil.update.password.success');
         } else {
             $validator = false;
-            $message = $this->translator->trans('no.equals.password');
+            $message = $this->translator->trans('no.equals.password.or.secretpass.undefined');
         }
 
         // AJAX
@@ -96,6 +98,64 @@ class ProfilController extends AbstractController
         } else {
             throw new \Exception($this->translator->trans('ajax.exceptionError'));
         }
+    }
+
+    /**
+     * @Route("/update-secretpass/{id}", name="profil.updateSecretpass")
+     * @param Request $request
+     * @param User $user
+     * @param UpdateSecretPassNotification $notification
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function updateSecretpass(Request $request, User $user, UpdateSecretPassNotification $notification)
+    {
+        $secretPass = $request->request->get('secretPass');
+        $confSecretPass = $request->request->get('confirm_secretpass');
+        $isValid = $secretPass == $confSecretPass;
+        if ($isValid) {
+            // Send email for confirmation, return params getter
+            $notification->notify($user, $secretPass);
+            $validator = true;
+            $message = 'Un mail de confirmation vous à été envoyer à votre adresse mail, merci de confirmer votre changement de mot secret';
+        } else {
+            $validator = false;
+            $message = $this->translator->trans('field.not.equals');
+        }
+
+        // AJAX
+        if ($request->isXmlHttpRequest()) {
+            $response = new JsonResponse();
+            return $response->setData([
+                'message' => $message,
+                'validator' => $validator
+            ]);
+        } else {
+            throw new \Exception($this->translator->trans('ajax.exceptionError'));
+        }
+    }
+
+    /**
+     * @Route("/confirm-update-secretpass/{id}/{secretpass}", name="profil.update-confirm-secretpass")
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function updateConfirmPassword(Request $request, User $user): Response
+    {
+        // Get Url and explode url per '/', and get the end element in table[]
+        $url = $request->getUri();
+        $table = explode('/', $url);
+        $secretpass = end($table);
+
+        // Save the new secret pass and hash sha1 algorithm
+        $em = $this->getDoctrine()->getManager();
+        $user->setSecretpass(sha1($secretpass));
+        $em->persist($user);
+        $em->flush();
+        $message = $this->translator->trans('success-message');
+        $this->addFlash('success', $message);
+        return $this->redirectToRoute('profil', ['id' => $user->getId()]);
     }
 
     /**

@@ -79,6 +79,7 @@ profil.settings: Settings
 profil.my.favorite.restaurant: Mes restaurants préférés
 profil.setting.my.comments: Administrer mes commentaires
 profil.setting.my.posts: Adminitrer mes posts
+profil.setting.edit.secretpass: Modifier mon mot secret
 profil.change.password: Modifier mon mot de passe
 profil.delete.account: Supprimer mon compte
 profil.disable.account: Désactiver mon compte
@@ -93,9 +94,12 @@ profil.edit.password: Je change mon mot de passe
 profil.edit.account: Edition du profil
 profil.update.password.success: Votre mot de passe à été modifié avec succès
 profil.update.password.error: Ouuups, votre ancien mot de passe est incorrect
-no.equals.password: Les mot de passe doivent être identique
+no.equals.password.or.secretpass.undefined: Les mot de passe doivent être identique et le mot secret est incorrect
 ajax.exceptionError: Erreur lors de la requête Ajax, veuillé réessayer ultérieurement
 edit.password.oldpassword: Votre ancien mot de passe
 edit.password.password: Votre nouveau mot de passe
 edit.password.repeatpassword: Répèter votre mot de passe
 edit.password.success: Votre mot de passe à bien été modifié
+secretpass: Mot secret
+repeat.secretpass: Répèter votre mot secret
+field.not.equals: Les champs doivent être identique

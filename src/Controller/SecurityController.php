@@ -58,6 +58,7 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $user->setCreatedAt(new \DateTime());
             $user->setRoles($user::ROLE_USER);
+            $user->setSecretpass(sha1($form['secretpass']->getData()));
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
             $em->persist($user);
