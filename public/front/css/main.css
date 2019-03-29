@@ -216,6 +216,16 @@ main {
     color: #fff;
 }
 
+/* Contact page
+------------------------- */
+.top-page-contact {
+    height: 400px;
+    width: 100%;
+    background: url('../images/background-contact.jpg') no-repeat center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
 /* Profil page
 ------------------------- */
 .top-page {

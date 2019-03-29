@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Bienvenue</title>
+
+    <link rel="stylesheet" href="{{ asset('email/css/welcome.css') }}">
+
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<!-- HEADER -->
+<table class="head-wrap" bgcolor="#000000">
+    <tr>
+        <td style="color: #FFF;"> Vous avez fait une demande de contact </td>
+        <td class="header container">
+
+            <div class="content">
+                <table bgcolor="#000;">
+                    <tr>
+                        <td align="right"><h6 class="collapse">{{ contact.sujet }}</h6></td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+        <td></td>
+    </tr>
+</table><!-- /HEADER -->
+
+
+<!-- BODY -->
+<table class="body-wrap">
+    <tr>
+        <td></td>
+        <td class="container" bgcolor="#FFFFFF">
+
+            <div class="content">
+                <table>
+
+                    <tr>
+                        <td>Nom:</td>
+                        <td>{{ contact.name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Firstname:</td>
+                        <td>{{ contact.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ contact.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sujet:</td>
+                        <td>{{ contact.sujet }}</td>
+                    </tr>
+                    <tr>
+                        <td>Téléphone:</td>
+                        <td>{{ contact.numberPhone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Restaurant:</td>
+                        <td>{{ contact.restaurant == '' ? '' : contact.restaurant }}</td>
+                    </tr>
+                    <tr>
+                        <td>Message:</td>
+                        <td>{{ contact.text }}</td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </td>
+        <td></td>
+    </tr>
+</table><!-- /BODY -->
+
+</body>
+</html>

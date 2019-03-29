@@ -3,10 +3,15 @@ firstname: Prénom
 email: Email
 password: Mot de passe
 repeat password: Répéter le mot de passe
-contact.email: Votre Email
 sujet: Votre sujet
-message: Votre message
 contact.submit: Envoyer
 user.password.fields.must.match: Les mot de passes doivent être identique
 old_password: Votre ancien mot de passe est incorrect
 secretpass: Mot secret
+contact.name: Votre nom
+contact.firstname: Votre prénom
+contact.email: Votre email
+contact.sujet: Votre sujet
+contact.number.phone: Votre numéro de téléphone
+contact.restaurant: Votre demande de contact concerne t'il un restaurant
+contact.message: Votre message
