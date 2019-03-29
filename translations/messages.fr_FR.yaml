@@ -103,3 +103,6 @@ edit.password.success: Votre mot de passe à bien été modifié
 secretpass: Mot secret
 repeat.secretpass: Répèter votre mot secret
 field.not.equals: Les champs doivent être identique
+not_blank: Ce champs est obligatoire
+email: Ce champs doit être un email valide
+number_phone: Ce champs est un numéro de téléphone contenant 10 chiffres

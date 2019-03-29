@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
@@ -18,16 +19,43 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="not_blank")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="not_blank")
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="not_blank")
+     * @Assert\Email(message="email")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="not_blank")
      */
     private $sujet;
 
     /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     * @Assert\Length(max="10")
+     */
+    private $number_phone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $restaurant;
+
+    /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="not_blank")
      */
     private $text;
 
@@ -41,6 +69,7 @@ class Contact
      */
     private $created_at;
 
+
     public function __construct()
     {
         $this->done = 0;
@@ -49,6 +78,30 @@ class Contact
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -71,6 +124,30 @@ class Contact
     public function setSujet(string $sujet): self
     {
         $this->sujet = $sujet;
+
+        return $this;
+    }
+
+    public function getNumberPhone(): ?string
+    {
+        return $this->number_phone;
+    }
+
+    public function setNumberPhone(?string $number_phone): self
+    {
+        $this->number_phone = $number_phone;
+
+        return $this;
+    }
+
+    public function getRestaurant(): ?string
+    {
+        return $this->restaurant;
+    }
+
+    public function setRestaurant(?string $restaurant): self
+    {
+        $this->restaurant = $restaurant;
 
         return $this;
     }

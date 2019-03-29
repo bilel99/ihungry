@@ -22,7 +22,6 @@ $(document).ready(function () {
         }
     );
 
-
     // Show form edit password / edit profil / edit secretpass /
     $('#profil-edit-secretpass').on('click', function (e) {
         e.preventDefault();
@@ -57,3 +56,23 @@ $(document).ready(function () {
 
 
 });
+
+/**
+ * class="active" for navigation bar in current page
+ */
+let activeCurrentPage = function () {
+    // get url
+    let pathname = window.location.pathname;
+    let path = pathname.substring(1);
+
+    if (path == '') {
+        path = 'accueil';
+    }
+
+    let attribute = $('.' + path).attr('class');
+    attribute = attribute.substring(9);
+    if (path == attribute) {
+        // Active class
+        $('.nav-item.' + attribute).addClass('active');
+    }
+}
