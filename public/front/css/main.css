@@ -173,6 +173,224 @@ main {
     border-color: transparent transparent transparent #555;
 }
 
+/* Home page
+------------------------- */
+.listing {
+    background: #ffffff;
+}
+
+.listing_image {
+    z-index: 1;
+}
+
+.listing_image_container {
+    height: 100%;
+    overflow: hidden;
+}
+
+.listing_image_container > img {
+    -webkit-transition: all 1600ms ease;
+    -moz-transition: all 1600ms ease;
+    -ms-transition: all 1600ms ease;
+    -o-transition: all 1600ms ease;
+    transition: all 1600ms ease;
+}
+
+.listing:hover .listing_image_container > img {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.listing_price {
+    position: absolute;
+    left: 34px;
+    margin-top: -15px;
+}
+
+.tag_price_subtitle {
+    font-size: 0.7em;
+}
+
+.listing_location {
+    padding-left: 34px !important;
+    padding-top: 45px;
+    padding-bottom: 17px;
+    padding-right: 30px;
+    background: #f3f7fb;
+    margin-top: 0 !important;
+}
+
+.listing_location > img {
+    margin-top: -3px;
+}
+
+.listing_location a {
+    max-width: 230px;
+    margin-left: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2b2e35;
+    line-height: 1.875;
+}
+
+.listing_location a:hover {
+    color: #adc867;
+}
+
+.listing_info {
+    background: #f3f7fb;
+    padding-left: 29px;
+    padding-right: 15px;
+    padding-top: 18px;
+    padding-bottom: 17px;
+    margin-top: 2px;
+}
+
+.listing_info ul li {
+    margin-bottom: 10px;
+}
+
+.listing_info ul li:not(:last-of-type) {
+    margin-right: 28px;
+}
+
+.listing_info ul li span {
+    margin-left: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6c7079;
+}
+
+.tags {
+    position: absolute;
+    top: 15px;
+    left: 19px;
+}
+
+.tag {
+    height: 35px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tag:not(:last-child) {
+    margin-right: 15px;
+}
+
+.tag a {
+    display: block;
+    height: 100%;
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding-left: 22px;
+    padding-right: 19px;
+    line-height: 35px;
+    letter-spacing: 0.2em;
+}
+
+.tag_house {
+    background: #adc867;
+}
+
+.tag_sale {
+    background: #55407d;
+}
+
+.tag_rent {
+    background: #588dfb;
+}
+
+.tag_price {
+    display: inline-block;
+    height: 37px;
+    padding-left: 27px;
+    padding-right: 26px;
+    background: #ff006c;
+    line-height: 37px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.prop_location {
+    margin-top: 15px;
+    padding-left: 1px;
+}
+
+.prop_location img {
+    margin-top: -6px;
+}
+
+.prop_location span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6c7079;
+    margin-left: 25px;
+}
+
+/* Floating button + Label
+--------------------------*/
+.label-container {
+    position: fixed;
+    bottom: 48px;
+    right: 105px;
+    display: table;
+    visibility: hidden;
+    z-index: 10;
+}
+
+.label-text {
+    color: #FFF;
+    background: rgba(51, 51, 51, 0.5);
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.label-arrow {
+    display: table-cell;
+    vertical-align: middle;
+    color: #333;
+    opacity: 0.5;
+    z-index: 10;
+}
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #06C;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 10;
+}
+
+.my-float {
+    font-size: 24px;
+    margin-top: 18px;
+}
+
+a.float + div.label-container {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease;
+}
+
+a.float:hover + div.label-container {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* Login / Register
 ------------------------- */
 .card-signin {

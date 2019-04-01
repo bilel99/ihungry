@@ -44,6 +44,12 @@ contact.success: Félicitation votre demande de contact a bien été envoyée, n
 contact.error: Une erreur s'est produite pendant votre demande de contact, merci de bien vouloir réitérer votre demande ultérieurement
 contact.warning: Ouuuups, votre formulaire est incorrect!
 contact.questions: Foire au questions
+contact.faq: Foire Au Questions
+contact.question.faq: Avez-vous des questions
+contact.button.add.question: Soumettre
+submit.faq.success: Votre question à bien été soumis, merci pour votre participation
+faq.answer: waiting for an answer
+faq.empty: Le section FAQ est actuellement vide!
 #login
 login.title: Connection
 login.intro: Je me connecte
@@ -106,3 +112,4 @@ field.not.equals: Les champs doivent être identique
 not_blank: Ce champs est obligatoire
 email: Ce champs doit être un email valide
 number_phone: Ce champs est un numéro de téléphone contenant 10 chiffres
+add.restaurant: Ajouter un restaurant

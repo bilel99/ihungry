@@ -21,6 +21,7 @@
         <script src="{{ asset('plugins/izitoast/iziToast.min.js') }}"></script>
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="{{ asset('front/css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
 
     {% endblock %}
 </head>
@@ -40,7 +41,9 @@
                 <p>{{ 'login.access.denied' | trans }}</p>
                 <p>{{ 'login.access.denied2' | trans }}</p>
                 <hr>
-                <p class="mb-0"><a href="{{ path('profil', {'id': app.user.id}) }}">{{ 'login.access.denied3' | trans }}</a></p>
+                <p class="mb-0"><a
+                            href="{{ path('profil', {'id': app.user.id}) }}">{{ 'login.access.denied3' | trans }}</a>
+                </p>
             </div>
         </div>
     {% endif %}

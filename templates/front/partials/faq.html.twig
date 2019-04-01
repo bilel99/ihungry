@@ -1,0 +1,24 @@
+<div id="accordion">
+    <h1>{{ 'contact.faq' | trans }}</h1>
+    {% if faq == null or faq|length == 0 %}
+        <p>{{ 'faq.empty' | trans }}</p>
+    {% endif %}
+    {% for row in faq %}
+        <div class="card">
+            <div class="card-header" id="heading{{ loop.index }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-link {% if loop.index != 1 %}collapsed{% endif %}" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                        {{ row.question }}
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapse{{ loop.index }}" class="collapse {% if loop.index == 1 %}show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+                <div class="card-body">
+                    {{ row.answer }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>

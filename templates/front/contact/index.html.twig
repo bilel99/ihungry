@@ -9,7 +9,6 @@
 
     <div class="container">
         <div class="row">
-
             <!-- Form -->
             <div class="col-sm-7 col-md-7 mx-auto">
                 <div class="form-create-contact">
@@ -55,10 +54,29 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-5 col-md-5 mx-auto">
+                <div class="form-create-contact">
+                    <div class="card card-signin my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ 'contact.question.faq' | trans }}</h5>
+                            {{ form_start(faqForm, {'attr':{'class':'form-signin', 'id': 'form-contact'}}) }}
+                            <div class="form-group">
+                                {{ form_row(faqForm.question) }}
+                            </div>
+                            <button class="btn btn-lg btn-dark btn-block text-uppercase"
+                                    type="submit">{{ 'contact.button.add.question' | trans }}
+                            </button>
+                            {{ form_end(faqForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-sm-12 col-md-12 mx-auto">
+                {% include 'front/partials/faq.html.twig' %}
+            </div>
 
         </div>
     </div>
-
 
 {% endblock %}
