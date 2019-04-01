@@ -203,6 +203,16 @@ main {
     border-radius: 0;
 }
 
+.search-title {
+    position: absolute;
+    bottom: 170px;
+    color: #fff;
+    font-style: italic;
+    width: 100%;
+    margin: 0 auto;
+    left: 25%;
+}
+
 .listing {
     background: #ffffff;
 }
