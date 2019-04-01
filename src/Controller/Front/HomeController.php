@@ -3,7 +3,9 @@
 namespace App\Controller\Front;
 
 use App\Entity\Contact;
+use App\Entity\Faq;
 use App\Form\ContactType;
+use App\Form\FaqType;
 use App\Notification\ContactNotification;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,8 +58,33 @@ class HomeController extends AbstractController
             $this->addFlash('success', $this->translator->trans('contact.success'));
         }
 
+        $faq = new Faq();
+        $faqForm = $this->createForm(FaqType::class, $faq);
+        $faqForm->handleRequest($request);
+
+        if ($faqForm->isSubmitted() && $faqForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $question = $faqForm['question']->getData();
+            if (substr($question, -1) != '?') {
+                $faq->setQuestion($question . ' ?');
+            }
+            $faq->setAnswer($this->translator->trans('faq.answer'));
+            $faq->setDone(false);
+            $faq->setCreatedAt(new \DateTime());
+            $em->persist($faq);
+            $em->flush();
+            $this->addFlash('success', $this->translator->trans('submit.faq.success'));
+        }
+
+        // Get FAQ
+        $entityFaq = $this->getDoctrine()->getRepository(Faq::class);
+        $faq = $entityFaq->findAll();
+
         return $this->render('front/contact/index.html.twig', [
             'form' => $form->createView(),
+            'faqForm' => $faqForm->createView(),
+            'faq' => $faq,
             'current_menu' => 'contact'
         ]);
     }
