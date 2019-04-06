@@ -41,7 +41,8 @@
                                 <i class="fas fa-edit"></i> Edit
                             </a>
 
-                            <a href="{{ url('admin.category.delete', {'id':':CATEGORY_ID'}) }}" class="delete-category btn btn-danger btn-xs">
+                            <a href="{{ url('admin.category.delete', {'id':':CATEGORY_ID'}) }}"
+                               class="delete-category btn btn-danger btn-xs">
                                 <i class="fas fa-trash-alt"></i> Del
                             </a>
 
@@ -54,7 +55,7 @@
                                 </div>
                                 <button
                                         type="submit"
-                                        class="btn-edit-category_{{ row.id }} btn btn-primary">{{ 'button.submit' | trans }}
+                                        class="btn-edit-category btn btn-primary">{{ 'button.submit' | trans }}
                                 </button>
                             </div>
                         </form>

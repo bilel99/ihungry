@@ -4,6 +4,7 @@ ajax.createCategory();
 ajax.deleteCategory();
 ajax.deleteTag();
 ajax.editCategory();
+ajax.userToggleIsActive();
 
 $(document).ready(function () {
 
@@ -24,6 +25,12 @@ $(document).ready(function () {
      */
     toggleSidebar();
 
+    /**
+     * Open and close
+     * toggle slide
+     * edit category / {id}
+     */
+    toggleEditCategory();
 
 
 });
@@ -53,5 +60,22 @@ let toggleSidebar = function () {
             $('.custom-sidebar').animate({left: '0'}, 600);
             $('.custom-sidebar').attr('data-sidebar', '1');
         }
+    });
+}
+
+/**
+ * slideToggle
+ * Open / Close
+ * Edit Category
+ */
+let toggleEditCategory = function () {
+    $('.edit-category').on('click', function (e) {
+        e.preventDefault();
+        let row = $(this).parents('tr');
+        let id = row.data('id');
+        // open and close elements
+        $('.form-edit-category-' + id).slideToggle();
+        // Add attribute name in input_title
+        $('.category_title_' + id).attr('name', 'category_title_' + id);
     });
 }
