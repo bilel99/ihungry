@@ -14,9 +14,31 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class VilleRepository extends ServiceEntityRepository
 {
+    /**
+     * DEFAULT PAYS (FRANCE) ID = 75
+     */
+    private const DEFAULT_PAYS = 75;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Ville::class);
+    }
+
+    /**
+     * Search libelle ville
+     * @param $value
+     * @return mixed
+     */
+    public function searchByField($value)
+    {
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.pays_id = '.self::DEFAULT_PAYS)
+            ->andWhere('v.libelle LIKE :val')
+            ->setParameter('val', $value.'%')
+            ->orderBy('v.id', 'ASC')
+            ->setMaxResults(50)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

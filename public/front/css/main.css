@@ -371,6 +371,26 @@ main {
     margin-left: 25px;
 }
 
+/* SideBar
+------------------------- */
+.custom-sidebar {
+    position: fixed;
+    z-index: 10;
+}
+
+.list-group {
+    margin: auto;
+    float: left;
+    padding-top: 20px;
+}
+
+.lead {
+    margin: auto;
+    left: 0;
+    right: 0;
+    padding-top: 10%;
+}
+
 /* Floating button + Label
 --------------------------*/
 .label-container {

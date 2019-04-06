@@ -9,6 +9,7 @@ ajax.updateSecretPass();
 ajax.accountDisable();
 ajax.accountEnable();
 ajax.deleteAccount();
+ajax.returnCity();
 
 $(document).ready(function () {
     $(".dropdown").hover(
@@ -54,6 +55,12 @@ $(document).ready(function () {
         $('#li-edit-password').slideDown();
     });
 
+    // Vider le champ restaurant_libellerVille à l'appuye de la touche (delete)
+    $('.restaurant_libelleVille').keyup(function (e) {
+        if (e.which === 8) {
+            $('.restaurant_libelleVille').val('');
+        }
+    });
 
 });
 

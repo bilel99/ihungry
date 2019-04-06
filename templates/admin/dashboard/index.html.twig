@@ -1,0 +1,41 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %}{{ 'admin.title' | trans }}{% endblock %}
+{% block body %}
+
+    <h1>{{ 'admin.dashboard' | trans }}</h1>
+    <ul class="ds-btn">
+        <li>
+            <a class="btn btn-lg btn-primary" href="#">
+                <i class="fas fa-users fa fa-2x"></i>
+                <span>{{ 'admin.user' | trans }}<br>
+                                <small>{{ lengthUser }} {{ 'admin.length.user' | trans }}</small>
+                            </span>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-lg btn-success" href="#">
+                <i class="fas fa-utensils fa fa-2x"></i>
+                <span>{{ 'admin.restaurant' | trans }}<br>
+                                <small>766 Restaurants</small>
+                            </span>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-lg btn-danger" href="#">
+                <i class="fas fa-comments fa fa-2x"></i>
+                <span>{{ 'admin.comments' | trans }}<br>
+                                <small>876 commentaires</small>
+                            </span>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-lg btn-info" href="#">
+                <i class="fas fa-envelope-open-text fa fa-2x"></i>
+                <span>{{ 'admin.contact' | trans }}<br>
+                                <small>{{ lengthContact }} {{ 'admin.length.contact' | trans }}</small>
+                            </span>
+            </a>
+        </li>
+    </ul>
+
+{% endblock %}

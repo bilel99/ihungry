@@ -17,7 +17,7 @@ class Restaurant
      * @ORM\Column(type="integer")
      */
     private $id;
-    
+
     /**
      * @var User
      * @ORM\OneToOne(targetEntity="User", inversedBy="restaurant")
@@ -45,6 +45,8 @@ class Restaurant
      * @ORM\JoinColumn(name="ville_id", referencedColumnName="id", nullable=true)
      */
     private $ville;
+
+    private $libelle_ville;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -75,6 +77,17 @@ class Restaurant
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getLibelleVille()
+    {
+        return $this->libelle_ville;
+    }
+
+    public function setLibelleVille($libelle_ville)
+    {
+        $this->libelle_ville = $libelle_ville;
+        return $this;
     }
 
     public function getTitle(): ?string
