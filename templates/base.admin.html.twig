@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <title>{% block title %}{{ 'admin.dashboard' | trans }}!{% endblock %}</title>
+    {% block stylesheets %}
+        <!-- Bootstrap 4 -->
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap/bootstrap.min.css') }}">
+        <!-- Font awesome cdn -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+              integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+              crossorigin="anonymous">
+        <!-- plugin IziToast (notify) -->
+        <link rel="stylesheet" href="{{ asset('plugins/izitoast/iziToast.min.css') }}">
+        <script src="{{ asset('plugins/izitoast/iziToast.min.js') }}"></script>
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="{{ asset('admin/css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin/css/responsive.css') }}">
+
+    {% endblock %}
+</head>
+<body>
+<main role="main">
+    <div class="iziToast-message">
+        {% include 'admin/partials/success-alert.html.twig' %}
+        {% include 'admin/partials/error-alert.html.twig' %}
+        {% include 'admin/partials/warning-alert.html.twig' %}
+        {% include 'admin/partials/info-alert.html.twig' %}
+    </div>
+
+    {% if app.user and app.user.isActive == 0 %}
+        <div class="user-is-not-actif">
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">{{ 'oups' | trans }}</h4>
+                <p>{{ 'login.access.denied' | trans }}</p>
+                <p>{{ 'login.access.denied2' | trans }}</p>
+                <hr>
+                <p class="mb-0"><a
+                            href="{{ path('profil', {'id': app.user.id}) }}">{{ 'login.access.denied3' | trans }}</a>
+                </p>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% include 'admin/partials/nav.html.twig' %}
+    {% include 'admin/partials/sidebar.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="offset-1 col-sm-11 col-md-11">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'admin/partials/footer.html.twig' %}
+</main>
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jQuery/jQuery.min.js') }}"></script>
+    <!-- jQuery UI -->
+    <script src="{{ asset('plugins/jQuery/jquery-ui.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <!-- Sweet Alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <!-- custom javascript -->
+    <script src="{{ asset('admin/js/ajax.js') }}"></script>
+    <script src="{{ asset('admin/js/app.js') }}"></script>
+
+{% endblock %}
+</body>
+</html>

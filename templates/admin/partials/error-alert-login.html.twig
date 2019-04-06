@@ -1,0 +1,21 @@
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    <script>
+        iziToast.error({
+            position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+            progressBarColor: '',
+            backgroundColor: '',
+            messageSize: '',
+            messageColor: '',
+            icon: 'fas fa-times',
+            image: '',
+            imageWidth: 50,
+            balloon: true,
+            drag: true,
+            progressBar: true,
+            timeout: 6000,
+            title: 'Error',
+            message: `{{ error.messageKey|trans(error.messageData, 'security') }}`,
+        });
+    </script>
+{% endif %}

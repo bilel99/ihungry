@@ -114,3 +114,28 @@ not_blank: Ce champs est obligatoire
 email: Ce champs doit être un email valide
 number_phone: Ce champs est un numéro de téléphone contenant 10 chiffres
 add.restaurant: Ajouter un restaurant
+#Restaurant
+restaurant.title: Restaurant
+
+#Admin
+admin.title: Dashboard
+admin.contact: Contact
+admin.category: Catégories
+admin.restaurant: Restaurant
+admin.tag: Tag
+admin.user: Utilisateurs
+admin.comments: Commentaires
+admin.dashboard: Dashboard
+admin.membres: membres
+admin.length.user: membres
+admin.length.contact: demandes de contact
+login.denied: Vous êtes actuellement déconnecter, merci de bien vouloir vous reconnecter afin de retrouver tous vos accès!
+nav.returntowebsite: retour sur le site
+add.category: Ajouter une catégorie
+button.submit: Valider
+category.intro: Création d'une catégorie
+category.edit.intro: Modification d'une catégorie
+form.title: Titre de la catégorie
+delete-message: Suppression effectué avec succès!
+add.tag: Ajouter un tag
+tag.intro: Création d'un tag

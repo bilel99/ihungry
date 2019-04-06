@@ -17,3 +17,13 @@ contact.number.phone: Votre numéro de téléphone
 contact.restaurant: Votre demande de contact concerne t'il un restaurant
 contact.message: Votre message
 question: Avez-vous une question
+restaurant.title: Qu'elle est le nom du restaurant
+restaurant.description: Ajouter une description au restaurant
+restaurant.adress: A qu'elle adresse ce situe le restaurant
+restaurant.tag: Souhaitez-vous tager ce restaurant
+restaurant.categorie: Qu'elle est la catégorie du restaurant
+restaurant.ville: Dans qu'elle ville ce situe le restaurant
+restaurant.media: Souhaitez-vous uploader des images
+restaurant.cp: Code postal du restaurant
+category.title: Nom de la catégorie
+tag.title: Titre du tag

@@ -1,0 +1,68 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %}{{ 'admin.category' | trans }}{% endblock %}
+{% block body %}
+    <h1>{{ 'admin.category' | trans }}</h1>
+
+    {{ include('admin/modals/create-category.html.twig') }}
+
+    <!-- float button -->
+    <a href="" class="float" data-toggle="modal" data-target="#create-category-modal">
+        <i class="fas fa-plus my-float"></i>
+    </a>
+    <div class="label-container">
+        <div class="label-text">{{ 'add.category' | trans }}</div>
+        <i class="fa fa-play label-arrow"></i>
+    </div>
+
+    <div class="offset-2 col-10">
+        <table class="table table-striped table-light">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Created at</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            {% for row in categories %}
+                <tr id="category_{{ row.id }}" data-id="{{ row.id }}">
+                    <td>{{ row.id }}</td>
+                    <td id="row-title-{{ row.id }}">{{ row.title }}</td>
+                    <td>{{ row.createdAt|date('j M Y') }}</td>
+                    <td class="text-center">
+
+                        <form
+                                class="form-edit-category"
+                                action="{{ url('admin.edit.category', {'id':':CATEGORY_ID'}) }}"
+                                method="post"
+                                id="form-edit-category-{{ row.id }}">
+
+                            <a class='edit-category btn btn-info btn-xs'>
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+
+                            <a href="{{ url('admin.category.delete', {'id':':CATEGORY_ID'}) }}" class="delete-category btn btn-danger btn-xs">
+                                <i class="fas fa-trash-alt"></i> Del
+                            </a>
+
+                            <div class="form-block-category form-edit-category-{{ row.id }}" style="display: none;">
+                                <div class="form-group-{{ row.id }}">
+                                    <input type="text"
+                                           class="category_title_{{ row.id }} form-control"
+                                           placeholder="{{ 'form.title' | trans }}"
+                                           value="{{ row.title }}">
+                                </div>
+                                <button
+                                        type="submit"
+                                        class="btn-edit-category_{{ row.id }} btn btn-primary">{{ 'button.submit' | trans }}
+                                </button>
+                            </div>
+                        </form>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

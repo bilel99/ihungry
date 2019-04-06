@@ -1,0 +1,29 @@
+<!-- data-sidebar is boolean 1 equal open and 0 equal close -->
+<aside class="custom-sidebar" data-sidebar="1">
+    <div class="list-group">
+        <a href="#" class="{% if current_menu is defined and current_menu == 'user' %}active{% endif %} list-group-item">
+            <i class="fas fa-users"></i>
+            <span>{{ 'admin.user' | trans }}</span>
+        </a>
+        <a href="#" class="{% if current_menu is defined and current_menu == 'restaurant' %}active{% endif %} list-group-item">
+            <i class="fas fa-utensils"></i>
+            <span>{{ 'admin.restaurant' | trans }}</span>
+        </a>
+        <a href="{{ path('admin.category') }}" class="{% if current_menu is defined and current_menu == 'category' %}active{% endif %} list-group-item">
+            <i class="fas fa-stream"></i>
+            <span>{{ 'admin.category' | trans }}</span>
+        </a>
+        <a href="{{ path('admin.tag') }}" class="{% if current_menu is defined and current_menu == 'tag' %}active{% endif %} list-group-item">
+            <i class="fas fa-tags"></i>
+            <span>{{ 'admin.tag' | trans }}</span>
+        </a>
+        <a href="#" class="{% if current_menu is defined and current_menu == 'comments' %}active{% endif %} list-group-item">
+            <i class="fas fa-comments"></i>
+            <span>{{ 'admin.comments' | trans }}</span>
+        </a>
+        <a href="#" class="{% if current_menu is defined and current_menu == 'contact' %}active{% endif %} list-group-item">
+            <i class="fas fa-envelope-open-text"></i>
+            <span>{{ 'admin.contact' | trans }}</span>
+        </a>
+    </div>
+</aside>

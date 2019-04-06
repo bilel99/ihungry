@@ -1,0 +1,63 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <!-- Option open / close sidebar -->
+        <a id="toggle-sidebar" class="navbar-brand" href="">
+            <i id="icon-toggle-sidebar" class="fas fa-arrow-left"></i>
+        </a>
+
+        <a class="navbar-brand" href="{{ path('homepage') }}">IHungry {{ 'admin.dashboard' | trans }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if current_menu is defined and current_menu == 'user' %}active{% endif %}">
+                    <a class="nav-link" href="#">{{ 'admin.user' | trans }}</a>
+                </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'restaurant' %}active{% endif %}">
+                    <a class="nav-link" href="#">{{ 'admin.restaurant' | trans }}</a>
+                </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'category' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('admin.category') }}">{{ 'admin.category' | trans }}</a>
+                </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'tag' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('admin.tag') }}">{{ 'admin.tag' | trans }}</a>
+                </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'comments' %}active{% endif %}">
+                    <a class="nav-link" href="#">{{ 'admin.comments' | trans }}</a>
+                </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'contact' %}active{% endif %}">
+                    <a class="nav-link" href="#">{{ 'admin.contact' | trans }}</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mt-2 mt-md-0">
+                {% if not app.user %}
+                    <div class="user-is-not-actif">
+                        <div class="alert alert-danger" role="alert">
+                            <h4 class="alert-heading">{{ 'oups' | trans }}</h4>
+                            <p>{{ 'login.denied' | trans }}</p>
+                            <hr>
+                            <p class="mb-0">
+                                <a href="{{ path('app_login') }}">{{ 'login.intro' | trans }}</a>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ 'nav.welcome' | trans }} {{ app.user.firstname }} <span class="ui-icon-caret-1-e"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="{{ path('homepage') }}">{{ 'nav.returntowebsite' | trans }}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('security_logout') }}">{{ 'nav.logout' | trans }}</a>
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
