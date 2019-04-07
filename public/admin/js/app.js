@@ -5,6 +5,7 @@ ajax.deleteCategory();
 ajax.deleteTag();
 ajax.editCategory();
 ajax.userToggleIsActive();
+ajax.userToggleIsDone();
 
 $(document).ready(function () {
 

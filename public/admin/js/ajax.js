@@ -231,4 +231,60 @@ class Ajax {
         });
     }
 
+    /**
+     * Contact
+     * Toggle
+     * Enable / Disable
+     * isDone field {id}
+     * @returns {Promise<void>}
+     */
+    userToggleIsDone = async function () {
+        $('.btn-toggle-is-done').on('click', function (e) {
+            e.preventDefault();
+            let row = $(this).parents('tr');
+            let id = row.data('id');
+            let url = $('#btn-toggle-is-done-' + id).attr('href').replace(':CONTACT_ID', id);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (res) {
+                    // Update DOM
+                    if (res.isDone == false) {
+                        $('#is-done-' + id).removeClass();
+                        $('#is-done-' + id).addClass('fas fa-toggle-off fa fa-2x');
+                    } else {
+                        $('#is-done-' + id).removeClass();
+                        $('#is-done-' + id).addClass('fas fa-toggle-on fa fa-2x');
+                    }
+                    // Affichage du message
+                    $('.iziToast-message').append(
+                        iziToast.success({
+                            position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: 'fas fa-check',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 6000,
+                            title: 'Success',
+                            message: res.message
+                        })
+                    );
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
+            });
+        });
+    }
+
 }

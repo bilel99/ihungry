@@ -4,7 +4,7 @@
     <h1>{{ 'admin.user' | trans }}</h1>
 
     <div class="offset-2 col-10">
-        <table class="table table-striped table-light">
+        <table class="table table-striped table-light table-responsive">
             <thead>
             <tr>
                 <th>ID</th>
@@ -22,7 +22,7 @@
                     <td>{{ row.name }}</td>
                     <td>{{ row.firstname }}</td>
                     <td>{{ row.email }}</td>
-                    <td>{{ row.roles|json_encode }}</td>
+                    <td>{{ row.roles | json_encode }}</td>
                     <td>
                         <a id="btn-toggle-is-active-{{ row.id }}"
                            class="btn-toggle-is-active"
