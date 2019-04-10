@@ -6,6 +6,7 @@ ajax.deleteTag();
 ajax.editCategory();
 ajax.userToggleIsActive();
 ajax.userToggleIsDone();
+ajax.userChangeRole();
 
 $(document).ready(function () {
 

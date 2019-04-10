@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Tag;
 use App\Form\TagType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @IsGranted("ROLE_ADMIN", statusCode=403, message="Access denied")
+ * Class TagController
+ * @package App\Controller\Admin
+ */
 class TagController extends AbstractController
 {
     private $translator;
@@ -21,7 +27,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/tag", name="admin.tag")
+     * @Route("/admin/tag", name="admin.tag")
      * @param Request $request
      * @return Response
      * @throws \Exception
@@ -52,7 +58,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/delete-tag/{id}", name="admin.tag.delete", condition="request.isXmlHttpRequest()")
+     * @Route("/admin/tag/delete-tag/{id}", name="admin.tag.delete", condition="request.isXmlHttpRequest()")
      * @param Request $request
      * @param Tag $tag
      * @return JsonResponse

@@ -22,7 +22,17 @@
                     <td>{{ row.name }}</td>
                     <td>{{ row.firstname }}</td>
                     <td>{{ row.email }}</td>
-                    <td>{{ row.roles | json_encode }}</td>
+                    <td>
+                        <a id="btn-change-role-{{ row.id }}"
+                           class="btn-change-role"
+                           href="{{ url('admin.user.changerole', {'id': ':USER_ID'}) }}">
+                            {% if row.roles[0] == 'ROLE_USER' %}
+                                <i id="is-role-{{ row.id }}" class="fas fa-user fa fa-2x"></i>
+                            {% else %}
+                                <i id="is-role-{{ row.id }}" class="fas fa-crown fa fa-2x"></i>
+                            {% endif %}
+                        </a>
+                    </td>
                     <td>
                         <a id="btn-toggle-is-active-{{ row.id }}"
                            class="btn-toggle-is-active"

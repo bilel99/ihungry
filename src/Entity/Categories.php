@@ -68,6 +68,11 @@ class Categories
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
     /**
      * @return Collection|restaurant[]
      */
@@ -95,4 +100,8 @@ class Categories
 
         return $this;
     }
+
+
+
+
 }

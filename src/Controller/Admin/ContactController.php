@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Contact;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @IsGranted("ROLE_ADMIN", statusCode=403, message="Access denied")
+ * Class ContactController
+ * @package App\Controller\Admin
+ */
 class ContactController extends AbstractController
 {
     private $translator;
@@ -20,7 +26,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/contact", name="admin.contact")
+     * @Route("/admin/contact", name="admin.contact")
      * @param Request $request
      * @return Response
      */
@@ -36,7 +42,7 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @Route("/toggle-is-done/{id}", name="admin.contact.toggleIsDone", condition="request.isXmlHttpRequest()")
+     * @Route("/admin/contact/toggle-is-done/{id}", name="admin.contact.toggleIsDone", condition="request.isXmlHttpRequest()")
      * @param Request $request
      * @param Contact $contact
      * @return JsonResponse

@@ -8,7 +8,9 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Categories;
 use App\Entity\Restaurant;
+use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\RestaurantType;
 use DateTime;
@@ -43,11 +45,32 @@ class RestaurantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityVille = $this->getDoctrine()->getRepository(Ville::class);
+            $ville = $entityVille->findBy(['libelle' => $form['libelleVille']->getData()]);
+            $user = $this->getDoctrine()->getRepository(User::class)->find($request->getSession()->get('USER')->getId());
 
-            /*$em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
+
+            // Category
+            $restaurant->addCategorie($form['categorie']->getData());
+
+            // Tag
+            /*foreach ($form['tag']->getData() as $row) {
+                $restaurant->addTag($row);
+            }
+            // Media
+            foreach ($form['media']->getData() as $row) {
+                $restaurant->addMedium($row);
+            }*/
+
             $restaurant->setCreatedAt(new DateTime());
+            $restaurant->setVille($ville[0]);
+            $restaurant->setUser($user);
             $em->persist($restaurant);
-            $em->flush();*/
+            $em->flush();
+
+            $this->addFlash('success', $this->translator->trans('success-message'));
+            $this->redirectToRoute('restaurant.create');
         }
 
         return $this->render('front/restaurant/create.html.twig', [

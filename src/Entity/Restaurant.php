@@ -20,7 +20,7 @@ class Restaurant
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity="User", inversedBy="restaurant")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="restaurant", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     private $user;
@@ -28,20 +28,24 @@ class Restaurant
     /**
      * @var Tag
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="restaurant")
-     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=true)
      */
     private $tag;
 
     /**
      * @var Categories
      * @ORM\ManyToMany(targetEntity="Categories", inversedBy="restaurant")
-     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id", nullable=true)
      */
-    private $categorie;
+    public $categorie;
+
+    /**
+     * @var Media
+     * @ORM\ManyToMany(targetEntity="Media", inversedBy="restaurant")
+     */
+    private $media;
 
     /**
      * @var Ville
-     * @ORM\OneToOne(targetEntity="Ville", inversedBy="restaurant")
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="restaurant")
      * @ORM\JoinColumn(name="ville_id", referencedColumnName="id", nullable=true)
      */
     private $ville;
@@ -72,6 +76,7 @@ class Restaurant
     {
         $this->tag = new ArrayCollection();
         $this->categorie = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,6 +127,18 @@ class Restaurant
     public function setAdress(string $adress): self
     {
         $this->adress = $adress;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }
@@ -187,6 +204,7 @@ class Restaurant
     public function addCategorie(Categories $categorie): self
     {
         if (!$this->categorie->contains($categorie)) {
+            dd('toto');
             $this->categorie[] = $categorie;
         }
 
@@ -202,15 +220,31 @@ class Restaurant
         return $this;
     }
 
-    public function getVille(): ?Ville
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
     {
-        return $this->ville;
+        return $this->media;
     }
 
-    public function setVille(?Ville $ville): self
+    public function addMedium(Media $medium): self
     {
-        $this->ville = $ville;
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+        }
 
         return $this;
     }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+        }
+
+        return $this;
+    }
+
+
 }

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Categories;
 use App\Form\CategoryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @IsGranted("ROLE_ADMIN", statusCode=403, message="Access denied")
+ * Class CategoryController
+ * @package App\Controller\Admin
+ */
 class CategoryController extends AbstractController
 {
     private $translator;
@@ -21,7 +27,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/category", name="admin.category")
+     * @Route("/admin/category", name="admin.category")
      * @param Request $request
      * @return Response
      * @throws \Exception
@@ -62,7 +68,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/edit-category/{id}", name="admin.edit.category")
+     * @Route("/admin/category/edit-category/{id}", name="admin.edit.category")
      * @param Request $request
      * @param Categories $categories
      * @return JsonResponse
@@ -95,7 +101,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/delete-category/{id}", name="admin.category.delete", condition="request.isXmlHttpRequest()")
+     * @Route("/admin/category/delete-category/{id}", name="admin.category.delete", condition="request.isXmlHttpRequest()")
      * @param Request $request
      * @param Categories $categories
      * @return JsonResponse

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,9 +55,14 @@ class Pays
 
     /**
      * @var array
-     * @ORM\OneToOne(targetEntity="App\Entity\Ville", mappedBy="pays_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ville", mappedBy="pays_id")
      */
     private $ville;
+
+    public function __construct()
+    {
+        $this->ville = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -159,6 +166,29 @@ class Pays
         $newPays_id = $ville === null ? null : $this;
         if ($newPays_id !== $ville->getPaysId()) {
             $ville->setPaysId($newPays_id);
+        }
+
+        return $this;
+    }
+
+    public function addVille(Ville $ville): self
+    {
+        if (!$this->ville->contains($ville)) {
+            $this->ville[] = $ville;
+            $ville->setPaysId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVille(Ville $ville): self
+    {
+        if ($this->ville->contains($ville)) {
+            $this->ville->removeElement($ville);
+            // set the owning side to null (unless already changed)
+            if ($ville->getPaysId() === $this) {
+                $ville->setPaysId(null);
+            }
         }
 
         return $this;

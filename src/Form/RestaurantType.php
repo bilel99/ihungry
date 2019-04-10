@@ -2,8 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Categories;
 use App\Entity\Restaurant;
+use App\Entity\Tag;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,9 +49,39 @@ class RestaurantType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'restaurant.adress'
                 ]
+            ])
+            ->add('categorie', EntityType::class, [
+                'class' => Categories::class,
+                'required' => true,
+                'label' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'restaurant.categorie'
+                ]
+            ])
+            ->add('tag', EntityType::class, [
+                'class' => Tag::class,
+                'required' => true,
+                'label' => false,
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'restaurant.tag'
+                ]
+            ])
+            ->add('media', CollectionType::class, [
+                'entry_type' => MediaType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'prototype' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label' => false,
+                'attr' => [
+                    'class' => 'my-selector',
+                    'placeholder' => 'restaurant.media'
+                ]
             ]);
-            //->add('tag')
-            //->add('categorie')
 
     }
 

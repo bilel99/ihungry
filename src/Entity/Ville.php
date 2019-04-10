@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +20,7 @@ class Ville
 
     /**
      * @var array
-     * @ORM\OneToOne(targetEntity="Restaurant", mappedBy="ville"))
+     * @ORM\OneToMany(targetEntity="Restaurant", mappedBy="ville"))
      */
     private $restaurant;
 
@@ -74,10 +76,15 @@ class Ville
 
     /**
      * @var Pays
-     * @ORM\OneToOne(targetEntity="App\Entity\Pays", inversedBy="ville")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Pays", inversedBy="ville")
      * @ORM\JoinColumn(name="pays_id", referencedColumnName="id", nullable=true)
      */
     private $pays_id;
+
+    public function __construct()
+    {
+        $this->restaurant = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -229,6 +236,29 @@ class Ville
         $newVille = $restaurant === null ? null : $this;
         if ($newVille !== $restaurant->getVille()) {
             $restaurant->setVille($newVille);
+        }
+
+        return $this;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurant->contains($restaurant)) {
+            $this->restaurant[] = $restaurant;
+            $restaurant->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurant->contains($restaurant)) {
+            $this->restaurant->removeElement($restaurant);
+            // set the owning side to null (unless already changed)
+            if ($restaurant->getVille() === $this) {
+                $restaurant->setVille(null);
+            }
         }
 
         return $this;

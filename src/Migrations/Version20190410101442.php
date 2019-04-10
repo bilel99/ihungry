@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190326164939 extends AbstractMigration
+final class Version20190410101442 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,8 @@ final class Version20190326164939 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user ADD secretpass VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE restaurant DROP INDEX UNIQ_EB95123FA73F0036, ADD INDEX IDX_EB95123FA73F0036 (ville_id)');
+        $this->addSql('ALTER TABLE restaurant DROP INDEX UNIQ_EB95123FA76ED395, ADD INDEX IDX_EB95123FA76ED395 (user_id)');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +31,7 @@ final class Version20190326164939 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user DROP secretpass');
+        $this->addSql('ALTER TABLE restaurant DROP INDEX IDX_EB95123FA76ED395, ADD UNIQUE INDEX UNIQ_EB95123FA76ED395 (user_id)');
+        $this->addSql('ALTER TABLE restaurant DROP INDEX IDX_EB95123FA73F0036, ADD UNIQUE INDEX UNIQ_EB95123FA73F0036 (ville_id)');
     }
 }

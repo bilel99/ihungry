@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,10 +18,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable
 {
+    /**
+     * Const Roles User
+     */
     const ROLE_USER = [
         'ROLE_USER'
     ];
-
     const ROLE_ADMIN = [
         'ROLE_ADMIN'
     ];
@@ -40,7 +44,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var array
-     * @ORM\OneToOne(targetEntity="Restaurant", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Restaurant", mappedBy="user", cascade={"persist"})
      */
     private $restaurant;
 
@@ -104,6 +108,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->restaurant = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -353,5 +358,28 @@ class User implements UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurant->contains($restaurant)) {
+            $this->restaurant[] = $restaurant;
+            $restaurant->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurant->contains($restaurant)) {
+            $this->restaurant->removeElement($restaurant);
+            // set the owning side to null (unless already changed)
+            if ($restaurant->getUser() === $this) {
+                $restaurant->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

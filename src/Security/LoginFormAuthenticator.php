@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Controller\SecurityController;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -56,6 +55,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['email']
+        );
+
+        // Set Session Role User
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'email' => $credentials['email'],
+        ]);
+        $request->getSession()->set(
+            'USER_ROLE',
+            $user->getRoles()[0]
+        );
+        // Set Session User
+        $request->getSession()->set(
+            'USER',
+            $user
         );
 
         return $credentials;

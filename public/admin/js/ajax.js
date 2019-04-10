@@ -287,4 +287,62 @@ class Ajax {
         });
     }
 
+    /**
+     * Change role User
+     * @returns {Promise<void>}
+     */
+    userChangeRole = async function () {
+        $('.btn-change-role').on('click', function (e) {
+            e.preventDefault();
+            let row = $(this).parents('tr');
+            let id = row.data('id');
+            let url = $('#btn-change-role-' + id).attr('href').replace(':USER_ID', id);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (res) {
+                    // Update DOM
+                    if (res.is_role == 'ROLE_USER') {
+                        $('#is-role-' + id).removeClass();
+                        $('#is-role-' + id).addClass('fas fa-user fa fa-2x');
+                    } else {
+                        $('#is-role-' + id).removeClass();
+                        $('#is-role-' + id).addClass('fas fa-crown fa fa-2x');
+                    }
+
+                    setTimeout(function () {
+                        window.location.href = res.redirectTo;
+                    }, 3000);
+
+                    // Affichage du message
+                    $('.iziToast-message').append(
+                        iziToast.warning({
+                            position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: 'fas fa-check',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 6000,
+                            title: 'Success',
+                            message: res.message
+                        })
+                    );
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
+            });
+        });
+    }
+
 }
