@@ -19,12 +19,6 @@ class Categories
     private $id;
 
     /**
-     * @var array
-     * @ORM\ManyToMany(targetEntity="restaurant", mappedBy="categorie")
-     */
-    private $restaurant;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -34,9 +28,14 @@ class Categories
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Restaurant", mappedBy="categories")
+     */
+    private $restaurants;
+
     public function __construct()
     {
-        $this->restaurant = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,31 +67,37 @@ class Categories
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
     /**
-     * @return Collection|restaurant[]
+     * @return Collection|Restaurant[]
      */
-    public function getRestaurant(): Collection
+    public function getRestaurants(): Collection
     {
-        return $this->restaurant;
+        return $this->restaurants;
     }
 
-    public function addRestaurant(restaurant $restaurant): self
+    public function addRestaurant(Restaurant $restaurant): self
     {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant[] = $restaurant;
-            $restaurant->addCategorie($this);
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->addCategory($this);
         }
 
         return $this;
     }
 
-    public function removeRestaurant(restaurant $restaurant): self
+    public function removeRestaurant(Restaurant $restaurant): self
     {
-        if ($this->restaurant->contains($restaurant)) {
-            $this->restaurant->removeElement($restaurant);
-            $restaurant->removeCategorie($this);
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
+            $restaurant->removeCategory($this);
         }
 
         return $this;
     }
+
 }

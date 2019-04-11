@@ -77,6 +77,7 @@ class SecurityController extends AbstractController
 
     /**
      * @route("/logout", name="security_logout")
+     * the framework use the empty function logout()
      */
     public function logout()
     {

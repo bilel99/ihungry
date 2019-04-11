@@ -1,6 +1,10 @@
 class Ajax {
 
 
+    /**
+     * Create category
+     * @returns {Promise<void>}
+     */
     createCategory = async function () {
         $('#create-category').on('click', function (e) {
             e.preventDefault();
@@ -45,6 +49,10 @@ class Ajax {
         });
     }
 
+    /**
+     * Delete tag/{id}
+     * @returns {Promise<void>}
+     */
     deleteTag = async function () {
         $('.delete-tag').on('click', function (e) {
             e.preventDefault();
@@ -135,43 +143,204 @@ class Ajax {
     }
 
     /**
-     * Open and Close form edit category
+     * Form edit category
      * click button edit category / {id}
      */
     editCategory = async function () {
-        $('.edit-category').on('click', function (e) {
+        $('.btn-edit-category').on('click', function (e) {
+            e.preventDefault();
+            let row = $(this).parents().parents('tr');
+            let id = row.data('id');
+            let form = $('#form-edit-category-' + id);
+            let url = form.attr('action').replace(':CATEGORY_ID', id);
+            let data = form.serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: data,
+                success: function (result) {
+                    // Close toggle
+                    $('.form-edit-category-' + id).slideUp();
+                    // Show the new category
+                    $('#row-title-' + id).html(result.title);
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * User
+     * Toggle
+     * Enable / Disable
+     * isActive field {id}
+     * @returns {Promise<void>}
+     */
+    userToggleIsActive = async function () {
+        $('.btn-toggle-is-active').on('click', function (e) {
             e.preventDefault();
             let row = $(this).parents('tr');
             let id = row.data('id');
-            // open and close elements
-            $('.form-edit-category-' + id).slideToggle();
-            // Add attribute name in input_title
-            $('.category_title_' + id).attr('name', 'category_title_' + id);
+            let url = $('#btn-toggle-is-active-' + id).attr('href').replace(':USER_ID', id);
 
-            $('.btn-edit-category_' + id).on('click', function (e) {
-                e.preventDefault();
-                let form = $('#form-edit-category-' + id);
-                let url = form.attr('action').replace(':CATEGORY_ID', id);
-                let data = form.serialize();
-
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: data,
-                    success: function (result) {
-                        // Close toggle
-                        $('.form-edit-category-' + id).slideUp();
-                        // Show the new category
-                        $('#row-title-' + id).html(result.title);
-                    }, error: function () {
-                        Swal.fire({
-                            type: 'error',
-                            title: 'Oops...',
-                            text: 'Error Ajax Request!'
-                        });
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (res) {
+                    // Update DOM
+                    if (res.isActive == false) {
+                        $('#is-active-' + id).removeClass();
+                        $('#is-active-' + id).addClass('fas fa-toggle-off fa fa-2x');
+                    } else {
+                        $('#is-active-' + id).removeClass();
+                        $('#is-active-' + id).addClass('fas fa-toggle-on fa fa-2x');
                     }
-                });
-                return false;
+                    // Affichage du message
+                    $('.iziToast-message').append(
+                        iziToast.success({
+                            position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: 'fas fa-check',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 6000,
+                            title: 'Success',
+                            message: res.message
+                        })
+                    );
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Contact
+     * Toggle
+     * Enable / Disable
+     * isDone field {id}
+     * @returns {Promise<void>}
+     */
+    userToggleIsDone = async function () {
+        $('.btn-toggle-is-done').on('click', function (e) {
+            e.preventDefault();
+            let row = $(this).parents('tr');
+            let id = row.data('id');
+            let url = $('#btn-toggle-is-done-' + id).attr('href').replace(':CONTACT_ID', id);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (res) {
+                    // Update DOM
+                    if (res.isDone == false) {
+                        $('#is-done-' + id).removeClass();
+                        $('#is-done-' + id).addClass('fas fa-toggle-off fa fa-2x');
+                    } else {
+                        $('#is-done-' + id).removeClass();
+                        $('#is-done-' + id).addClass('fas fa-toggle-on fa fa-2x');
+                    }
+                    // Affichage du message
+                    $('.iziToast-message').append(
+                        iziToast.success({
+                            position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: 'fas fa-check',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 6000,
+                            title: 'Success',
+                            message: res.message
+                        })
+                    );
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Change role User
+     * @returns {Promise<void>}
+     */
+    userChangeRole = async function () {
+        $('.btn-change-role').on('click', function (e) {
+            e.preventDefault();
+            let row = $(this).parents('tr');
+            let id = row.data('id');
+            let url = $('#btn-change-role-' + id).attr('href').replace(':USER_ID', id);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                success: function (res) {
+                    // Update DOM
+                    if (res.is_role == 'ROLE_USER') {
+                        $('#is-role-' + id).removeClass();
+                        $('#is-role-' + id).addClass('fas fa-user fa fa-2x');
+                    } else {
+                        $('#is-role-' + id).removeClass();
+                        $('#is-role-' + id).addClass('fas fa-crown fa fa-2x');
+                    }
+
+                    setTimeout(function () {
+                        window.location.href = res.redirectTo;
+                    }, 3000);
+
+                    // Affichage du message
+                    $('.iziToast-message').append(
+                        iziToast.warning({
+                            position: 'topRight', // center, bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter
+                            progressBarColor: '',
+                            backgroundColor: '',
+                            messageSize: '',
+                            messageColor: '',
+                            icon: 'fas fa-check',
+                            image: '',
+                            imageWidth: 50,
+                            balloon: true,
+                            drag: true,
+                            progressBar: true,
+                            timeout: 6000,
+                            title: 'Success',
+                            message: res.message
+                        })
+                    );
+                }, error: function () {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Error Ajax Request!'
+                    });
+                }
             });
         });
     }

@@ -3,15 +3,20 @@
 
 namespace App\Controller\Admin;
 
-
 use App\Entity\Contact;
 use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @IsGranted("ROLE_ADMIN", statusCode=403, message="Access denied")
+ * Class DashboardController
+ * @package App\Controller\Admin
+ */
 class DashboardController extends AbstractController
 {
     private $translator;
@@ -22,13 +27,12 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard", name="admin.dashboard")
+     * @Route("/admin/dashboard", name="admin.dashboard")
      * @param Request $request
      * @return Response
      */
     public function index(Request $request): Response
     {
-
         // length contact
         $entityContact = $this->getDoctrine()->getRepository(Contact::class);
         $lengthContact = $entityContact->count(array('done' => 0));

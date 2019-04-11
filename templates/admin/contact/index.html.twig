@@ -1,0 +1,39 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %}{{ 'admin.contact' | trans }}{% endblock %}
+{% block body %}
+    <h1>{{ 'admin.contact' | trans }}</h1>
+    <div class="offset-2 col-10">
+        <table class="table table-striped table-light table-responsive">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>email</th>
+                <th>sujet</th>
+                <th>done</th>
+                <th>Created at</th>
+            </tr>
+            </thead>
+            {% for row in contact %}
+                <tr id="contact_{{ row.id }}" data-id="{{ row.id }}">
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.sujet }}</td>
+                    <td>
+                        <a id="btn-toggle-is-done-{{ row.id }}"
+                           class="btn-toggle-is-done"
+                           href="{{ url('admin.contact.toggleIsDone', {'id': ':CONTACT_ID'}) }}">
+                            {% if row.done %}
+                                <i id="is-done-{{ row.id }}" class="fas fa-toggle-on fa fa-2x"></i>
+                            {% else %}
+                                <i id="is-done-{{ row.id }}" class="fas fa-toggle-off fa fa-2x"></i>
+                            {% endif %}
+                        </a>
+                    </td>
+                    <td>{{ row.createdAt|date('j M Y') }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

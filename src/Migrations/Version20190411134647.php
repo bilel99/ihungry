@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190326164939 extends AbstractMigration
+final class Version20190411134647 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,9 @@ final class Version20190326164939 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user ADD secretpass VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE restaurant ADD user_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE restaurant ADD CONSTRAINT FK_EB95123FA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('CREATE INDEX IDX_EB95123FA76ED395 ON restaurant (user_id)');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +32,8 @@ final class Version20190326164939 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user DROP secretpass');
+        $this->addSql('ALTER TABLE restaurant DROP FOREIGN KEY FK_EB95123FA76ED395');
+        $this->addSql('DROP INDEX IDX_EB95123FA76ED395 ON restaurant');
+        $this->addSql('ALTER TABLE restaurant DROP user_id');
     }
 }

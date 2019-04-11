@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Media
 {
@@ -15,12 +18,6 @@ class Media
      * @ORM\Column(type="integer")
      */
     private $id;
-    
-    /**
-     * @var array
-     * @ORM\OneToOne(targetEntity="User", mappedBy="media")
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="integer")
@@ -37,10 +34,27 @@ class Media
      */
     private $path;
 
+    private $file;
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Restaurant", mappedBy="media")
+     */
+    private $restaurants;
+
+    public function __construct()
+    {
+        $this->restaurants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -83,6 +97,17 @@ class Media
         return $this;
     }
 
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -95,19 +120,119 @@ class Media
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUpdatedAt()
     {
-        return $this->user;
+        return $this->updated_at;
     }
 
-    public function setUser(?User $user): self
+    public function setUpdatedAt($updated_at)
     {
-        $this->user = $user;
+        $this->updated_at = $updated_at;
+        return $this;
+    }
 
-        // set (or unset) the owning side of the relation if necessary
-        $newMedia = $user === null ? null : $this;
-        if ($newMedia !== $user->getMedia()) {
-            $user->setMedia($newMedia);
+
+
+    /*****************************************************
+     *
+     *                  Step Upload Image
+     *
+     ****************************************************/
+    /**
+     * @ORM\PostLoad()
+     */
+    public function postLoad()
+    {
+        $this->updated_at = new \DateTime();
+    }
+
+    public function getUploadRootDir()
+    {
+        return __DIR__ . '../../public/uploads';
+    }
+
+    public function getAbsolutePath()
+    {
+        return $this->path === null ? null : $this->getUploadRootDir() . '/' . $this->path;
+    }
+
+    public function getAssetFilename()
+    {
+        return 'uploads/' . $this->path;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        $this->tempFile = $this->getAbsolutePath();
+        $this->oldFile = $this->getPath();
+        $this->updated_at = new \DateTime();
+
+        if ($this->file != null) {
+            $this->path = md5(uniqid()) . '.' . $this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if ($this->file !== null) {
+            $this->file->move($this->getUploadRootDir(), $this->filename);
+            unset($this->file);
+
+            if ($this->oldFile != null) {
+                unlink($this->tempFile);
+            }
+        }
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload()
+    {
+        $this->tempFile = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (file_exists($this->tempFile)) {
+            unlink($this->tempFile);
+        }
+    }
+
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->addMedium($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
+            $restaurant->removeMedium($this);
         }
 
         return $this;

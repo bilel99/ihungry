@@ -2,8 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tag;
-use App\Form\TagType;
+use App\Entity\Contact;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,10 +13,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @IsGranted("ROLE_ADMIN", statusCode=403, message="Access denied")
- * Class TagController
+ * Class ContactController
  * @package App\Controller\Admin
  */
-class TagController extends AbstractController
+class ContactController extends AbstractController
 {
     private $translator;
 
@@ -27,60 +26,50 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/admin/tag", name="admin.tag")
+     * @Route("/admin/contact", name="admin.contact")
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
     public function index(Request $request): Response
     {
-        $tag = new Tag();
-        $form = $this->createForm(TagType::class, $tag);
-        $form->handleRequest($request);
+        $entityContact = $this->getDoctrine()->getRepository(Contact::class);
+        $contact = $entityContact->findAll();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $tag->setCreatedAt(new \DateTime());
-            $em->persist($tag);
-            $em->flush();
-            $this->addFlash('success', $this->translator->trans('success-message'));
-            $this->redirectToRoute('admin.tag');
-        }
-
-        $entityTag = $this->getDoctrine()->getRepository(Tag::class);
-        $tag = $entityTag->findAll();
-
-        return $this->render('admin/tag/index.html.twig', [
-            'current_menu' => 'tag',
-            'tag' => $tag,
-            'form' => $form->createView()
+        return $this->render('admin/contact/index.html.twig', [
+            'current_menu' => 'contact',
+            'contact' => $contact
         ]);
     }
 
     /**
-     * @Route("/admin/tag/delete-tag/{id}", name="admin.tag.delete", condition="request.isXmlHttpRequest()")
+     * @Route("/admin/contact/toggle-is-done/{id}", name="admin.contact.toggleIsDone", condition="request.isXmlHttpRequest()")
      * @param Request $request
-     * @param Tag $tag
+     * @param Contact $contact
      * @return JsonResponse
      * @throws \Exception
      */
-    public function destroy(Request $request, Tag $tag)
+    public function toggleIsDone(Request $request, Contact $contact)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($tag);
+        if ($contact->getDone() === true) {
+            $contact->setDone(false);
+        } else {
+            $contact->setDone(true);
+        }
+        $em->persist($contact);
         $em->flush();
 
         // Ajax
         $message = $this->translator->trans('success-message');
+        $isDone = $contact->getDone();
         if ($request->isXmlHttpRequest()) {
             $response = new JsonResponse();
             return $response->setData([
-                'message' => $message
+                'message' => $message,
+                'isDone' => $isDone
             ]);
         } else {
             throw new \Exception($this->translator->trans('ajax.exceptionError'));
         }
     }
-
-
 }

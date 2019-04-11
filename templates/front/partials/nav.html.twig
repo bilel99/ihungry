@@ -33,7 +33,11 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item"
                                href="{{ path('profil', {'id': app.user.id}) }}">{{ 'nav.profil' | trans }}</a>
-                            <a class="dropdown-item" href="{{ path('admin.dashboard') }}">{{ 'nav.admin' | trans }}</a>
+
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <a class="dropdown-item" href="{{ path('admin.dashboard') }}">{{ 'nav.admin' | trans }}</a>
+                            {% endif %}
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ path('security_logout') }}">{{ 'nav.logout' | trans }}</a>
                         </div>

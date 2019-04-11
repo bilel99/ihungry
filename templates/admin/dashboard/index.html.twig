@@ -5,7 +5,7 @@
     <h1>{{ 'admin.dashboard' | trans }}</h1>
     <ul class="ds-btn">
         <li>
-            <a class="btn btn-lg btn-primary" href="#">
+            <a class="btn btn-lg btn-primary" href="{{ path('admin.user') }}">
                 <i class="fas fa-users fa fa-2x"></i>
                 <span>{{ 'admin.user' | trans }}<br>
                                 <small>{{ lengthUser }} {{ 'admin.length.user' | trans }}</small>
@@ -29,7 +29,7 @@
             </a>
         </li>
         <li>
-            <a class="btn btn-lg btn-info" href="#">
+            <a class="btn btn-lg btn-info" href="{{ path('admin.contact') }}">
                 <i class="fas fa-envelope-open-text fa fa-2x"></i>
                 <span>{{ 'admin.contact' | trans }}<br>
                                 <small>{{ lengthContact }} {{ 'admin.length.contact' | trans }}</small>

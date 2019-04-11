@@ -116,6 +116,8 @@ number_phone: Ce champs est un numéro de téléphone contenant 10 chiffres
 add.restaurant: Ajouter un restaurant
 #Restaurant
 restaurant.title: Restaurant
+restaurant.categorie: Dans qu'elle catégorie ce situe le restaurant
+restaurant.tag: Choisisez des mot-clé qui caractèrise le restaurant
 
 #Admin
 admin.title: Dashboard

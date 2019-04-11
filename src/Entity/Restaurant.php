@@ -18,34 +18,6 @@ class Restaurant
      */
     private $id;
 
-    /**
-     * @var User
-     * @ORM\OneToOne(targetEntity="User", inversedBy="restaurant")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     */
-    private $user;
-
-    /**
-     * @var Tag
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="restaurant")
-     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=true)
-     */
-    private $tag;
-
-    /**
-     * @var Categories
-     * @ORM\ManyToMany(targetEntity="Categories", inversedBy="restaurant")
-     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id", nullable=true)
-     */
-    private $categorie;
-
-    /**
-     * @var Ville
-     * @ORM\OneToOne(targetEntity="Ville", inversedBy="restaurant")
-     * @ORM\JoinColumn(name="ville_id", referencedColumnName="id", nullable=true)
-     */
-    private $ville;
-
     private $libelle_ville;
 
     /**
@@ -68,10 +40,36 @@ class Restaurant
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="restaurants")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="restaurants")
+     */
+    private $ville;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", inversedBy="restaurants")
+     */
+    private $media;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="restaurants")
+     */
+    private $tag;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Categories", inversedBy="restaurants")
+     */
+    private $categories;
+
     public function __construct()
     {
+        $this->media = new ArrayCollection();
         $this->tag = new ArrayCollection();
-        $this->categorie = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +124,7 @@ class Restaurant
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -146,6 +145,44 @@ class Restaurant
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Media[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+        }
 
         return $this;
     }
@@ -179,38 +216,28 @@ class Restaurant
     /**
      * @return Collection|Categories[]
      */
-    public function getCategorie(): Collection
+    public function getCategories(): Collection
     {
-        return $this->categorie;
+        return $this->categories;
     }
 
-    public function addCategorie(Categories $categorie): self
+    public function addCategory(Categories $category): self
     {
-        if (!$this->categorie->contains($categorie)) {
-            $this->categorie[] = $categorie;
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
         }
 
         return $this;
     }
 
-    public function removeCategorie(Categories $categorie): self
+    public function removeCategory(Categories $category): self
     {
-        if ($this->categorie->contains($categorie)) {
-            $this->categorie->removeElement($categorie);
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
         }
 
         return $this;
     }
 
-    public function getVille(): ?Ville
-    {
-        return $this->ville;
-    }
 
-    public function setVille(?Ville $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
 }

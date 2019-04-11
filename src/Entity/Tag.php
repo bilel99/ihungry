@@ -19,12 +19,6 @@ class Tag
     private $id;
 
     /**
-     * @var array
-     * @ORM\ManyToMany(targetEntity="restaurant", mappedBy="tag")
-     */
-    private $restaurant;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $tag;
@@ -34,9 +28,14 @@ class Tag
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Restaurant", mappedBy="tag")
+     */
+    private $restaurants;
+
     public function __construct()
     {
-        $this->restaurant = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,28 +67,33 @@ class Tag
         return $this;
     }
 
-    /**
-     * @return Collection|restaurant[]
-     */
-    public function getRestaurant(): Collection
+    public function __toString()
     {
-        return $this->restaurant;
+        return $this->getTag();
     }
 
-    public function addRestaurant(restaurant $restaurant): self
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurants(): Collection
     {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant[] = $restaurant;
+        return $this->restaurants;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
             $restaurant->addTag($this);
         }
 
         return $this;
     }
 
-    public function removeRestaurant(restaurant $restaurant): self
+    public function removeRestaurant(Restaurant $restaurant): self
     {
-        if ($this->restaurant->contains($restaurant)) {
-            $this->restaurant->removeElement($restaurant);
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
             $restaurant->removeTag($this);
         }
 

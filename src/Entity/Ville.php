@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,12 +17,6 @@ class Ville
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @var array
-     * @ORM\OneToOne(targetEntity="Restaurant", mappedBy="ville"))
-     */
-    private $restaurant;
 
     /**
      * @ORM\Column(type="string", length=3)
@@ -73,11 +69,20 @@ class Ville
     private $metaphone;
 
     /**
-     * @var Pays
-     * @ORM\OneToOne(targetEntity="App\Entity\Pays", inversedBy="ville")
-     * @ORM\JoinColumn(name="pays_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Pays", inversedBy="villes")
      */
-    private $pays_id;
+    private $pays;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Restaurant", mappedBy="ville")
+     */
+    private $restaurants;
+
+    public function __construct()
+    {
+        $this->restaurants = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -204,31 +209,44 @@ class Ville
         return $this;
     }
 
-    public function getPaysId(): ?Pays
+    public function getPays(): ?Pays
     {
-        return $this->pays_id;
+        return $this->pays;
     }
 
-    public function setPaysId(?Pays $pays_id): self
+    public function setPays(?Pays $pays): self
     {
-        $this->pays_id = $pays_id;
+        $this->pays = $pays;
 
         return $this;
     }
 
-    public function getRestaurant(): ?Restaurant
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurants(): Collection
     {
-        return $this->restaurant;
+        return $this->restaurants;
     }
 
-    public function setRestaurant(?Restaurant $restaurant): self
+    public function addRestaurant(Restaurant $restaurant): self
     {
-        $this->restaurant = $restaurant;
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->setVille($this);
+        }
 
-        // set (or unset) the owning side of the relation if necessary
-        $newVille = $restaurant === null ? null : $this;
-        if ($newVille !== $restaurant->getVille()) {
-            $restaurant->setVille($newVille);
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
+            // set the owning side to null (unless already changed)
+            if ($restaurant->getVille() === $this) {
+                $restaurant->setVille(null);
+            }
         }
 
         return $this;
