@@ -35,18 +35,6 @@ class User implements UserInterface, \Serializable
      */
     private $id;
 
-    /**
-     * @var Media
-     * @ORM\OneToOne(targetEntity="Media", inversedBy="user", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
-     */
-    private $media;
-
-    /**
-     * @var array
-     * @ORM\OneToMany(targetEntity="Restaurant", mappedBy="user", cascade={"persist"})
-     */
-    private $restaurant;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -105,11 +93,21 @@ class User implements UserInterface, \Serializable
      */
     private $created_at;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Media", cascade={"persist", "remove"})
+     */
+    private $media;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Restaurant", mappedBy="user")
+     */
+    private $restaurants;
+
     public function __construct()
     {
-        $this->isActive = true;
-        $this->restaurant = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -234,36 +232,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getMedia(): ?Media
-    {
-        return $this->media;
-    }
-
-    public function setMedia(?Media $media): self
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
-    public function getRestaurant(): ?Restaurant
-    {
-        return $this->restaurant;
-    }
-
-    public function setRestaurant(?Restaurant $restaurant): self
-    {
-        $this->restaurant = $restaurant;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $restaurant === null ? null : $this;
-        if ($newUser !== $restaurant->getUser()) {
-            $restaurant->setUser($newUser);
-        }
-
-        return $this;
-    }
-
     /**
      * String representation of object
      * @link https://php.net/manual/en/serializable.serialize.php
@@ -360,10 +328,30 @@ class User implements UserInterface, \Serializable
     {
     }
 
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?Media $media): self
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
     public function addRestaurant(Restaurant $restaurant): self
     {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant[] = $restaurant;
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
             $restaurant->setUser($this);
         }
 
@@ -372,8 +360,8 @@ class User implements UserInterface, \Serializable
 
     public function removeRestaurant(Restaurant $restaurant): self
     {
-        if ($this->restaurant->contains($restaurant)) {
-            $this->restaurant->removeElement($restaurant);
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
             // set the owning side to null (unless already changed)
             if ($restaurant->getUser() === $this) {
                 $restaurant->setUser(null);
@@ -382,4 +370,6 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
+
 }

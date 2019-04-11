@@ -50,9 +50,14 @@ class RestaurantController extends AbstractController
             $user = $this->getDoctrine()->getRepository(User::class)->find($request->getSession()->get('USER')->getId());
 
             $em = $this->getDoctrine()->getManager();
+            $restaurant->setCreatedAt(new DateTime());
+            $restaurant->setVille($ville[0]);
+            $restaurant->setUser($user);
 
             // Category
-            $restaurant->addCategorie($form['categorie']->getData());
+            //$ca = $this->getDoctrine()->getRepository(Categories::class)
+             //   ->findBy(['title' => $form['categorie']->getData()[1]->getTitle()]);
+            //$restaurant->addCategorie($ca[0]);
 
             // Tag
             /*foreach ($form['tag']->getData() as $row) {
@@ -63,9 +68,7 @@ class RestaurantController extends AbstractController
                 $restaurant->addMedium($row);
             }*/
 
-            $restaurant->setCreatedAt(new DateTime());
-            $restaurant->setVille($ville[0]);
-            $restaurant->setUser($user);
+
             $em->persist($restaurant);
             $em->flush();
 

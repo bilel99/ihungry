@@ -66,12 +66,17 @@ $(document).ready(function () {
     $('select').select2();
 
     // Collection-Symfony
+    // Media
     $('.my-selector').collection({
         up: '<a href="#"><i class="fas fa-arrow-circle-up"></i></a>',
         down: '<a href="#"><i class="fas fa-arrow-circle-down"></i></a>',
         add: '<a href="#"><i class="fas fa-plus-circle"></i></a>',
         remove: '<a href="#"><i class="fas fa-minus-circle"></i></a>',
         duplicate: '<a href="#"><i class="fas fa-clone"></i></a>'
+    });
+    // Category
+    $('.my-selector-category').collection({
+
     });
 
 });

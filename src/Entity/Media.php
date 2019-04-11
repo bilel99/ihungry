@@ -20,18 +20,6 @@ class Media
     private $id;
 
     /**
-     * @var array
-     * @ORM\OneToOne(targetEntity="User", mappedBy="media")
-     */
-    private $user;
-
-    /**
-     * @var array
-     * @ORM\ManyToMany(targetEntity="Restaurant", mappedBy="media")
-     */
-    private $restaurant;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $type;
@@ -58,10 +46,14 @@ class Media
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Restaurant", mappedBy="media")
+     */
+    private $restaurants;
 
     public function __construct()
     {
-        $this->restaurant = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,51 +131,7 @@ class Media
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
 
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newMedia = $user === null ? null : $this;
-        if ($newMedia !== $user->getMedia()) {
-            $user->setMedia($newMedia);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Restaurant[]
-     */
-    public function getRestaurant(): Collection
-    {
-        return $this->restaurant;
-    }
-
-    public function addRestaurant(Restaurant $restaurant): self
-    {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant[] = $restaurant;
-            $restaurant->addMedium($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRestaurant(Restaurant $restaurant): self
-    {
-        if ($this->restaurant->contains($restaurant)) {
-            $this->restaurant->removeElement($restaurant);
-            $restaurant->removeMedium($this);
-        }
-
-        return $this;
-    }
 
     /*****************************************************
      *
@@ -260,5 +208,33 @@ class Media
         if (file_exists($this->tempFile)) {
             unlink($this->tempFile);
         }
+    }
+
+    /**
+     * @return Collection|Restaurant[]
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
+    public function addRestaurant(Restaurant $restaurant): self
+    {
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->addMedium($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurant $restaurant): self
+    {
+        if ($this->restaurants->contains($restaurant)) {
+            $this->restaurants->removeElement($restaurant);
+            $restaurant->removeMedium($this);
+        }
+
+        return $this;
     }
 }

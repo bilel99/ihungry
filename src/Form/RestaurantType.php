@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Categories;
 use App\Entity\Restaurant;
 use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -50,12 +49,18 @@ class RestaurantType extends AbstractType
                     'placeholder' => 'restaurant.adress'
                 ]
             ])
-            ->add('categorie', EntityType::class, [
-                'class' => Categories::class,
-                'required' => true,
+            ->add('categorie', CollectionType::class, [
+                'entry_type' => RestaurantCategoriesType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'allow_add' => true,
+                'prototype' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
                 'label' => false,
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'my-selector-category',
                     'placeholder' => 'restaurant.categorie'
                 ]
             ])
