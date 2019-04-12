@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'restaurant.title' | trans }}{% endblock %}
+{% block body %}
+    <!-- Carousel -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="first-slide"
+                     src="{{ asset('front/images/image-restaurant3.jpg') }}"
+                     alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption text-left">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="second-slide"
+                     src="{{ asset('front/images/image-restaurant3.jpg') }}"
+                     alt="Second slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="third-slide"
+                     src="{{ asset('front/images/image-restaurant3.jpg') }}"
+                     alt="Third slide">
+                <div class="container">
+                    <div class="carousel-caption text-right">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <!-- list of restaurant -->
+            {% for restaurant in restaurants %}
+                <div class="col-4">
+                    <div class="listing">
+                        <div class="listing_image">
+                            <div class="listing_image_container">
+                                {# is image exist #}
+                                {% for media in restaurant.media %}
+                                    {% if media is defined %}
+                                        <img src="{{ asset('uploads/') ~ media.path }}"
+                                             alt="{{ media.name ~ ' restaurant' }}">
+                                    {% endif %}
+                                {% endfor %}
+                                {% if restaurant.media is null or restaurant.media is not defined or restaurant.media is empty %}
+                                    {# default-image #}
+                                    <img src="{{ asset('front/images/default-image-restaurant.jpg') }}"
+                                         alt="default image restaurant">
+                                {% endif %}
+                            </div>
+                            <div class="tags d-flex flex-row align-items-start justify-content-start flex-wrap">
+                                <div class="tag tag_house"><a href="listings.html">{{ restaurant.title }}</a></div>
+                                <div class="tag tag_sale">
+                                    <a href="listings.html">
+                                        {% for categories in restaurant.categories %}
+                                            {{ categories.title }}
+                                        {% endfor %}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="tag_price listing_price">10 € prix moy.</div>
+                        </div>
+                        <div class="listing_content">
+                            <div class="prop_location listing_location d-flex flex-row align-items-start justify-content-start">
+                                <i class="fas fa-map-marker-alt fa-2x"></i>
+                                <a href="single.html">
+                                    {{ restaurant.adress }}, {{ restaurant.ville.libelle }}
+                                </a>
+                            </div>
+                            <div class="listing_info">
+                                <ul class="d-flex flex-row align-items-center justify-content-start flex-wrap">
+                                    <li class="property_area d-flex flex-row align-items-center justify-content-start">
+                                        <i class="fas fa-sort-numeric-up fa-2x"></i>
+                                        <span>10 /10</span>
+                                    </li>
+                                    <li class="d-flex flex-row align-items-center justify-content-start">
+                                        <i class="fas fa-people-carry fa-2x"></i>
+                                        <span>23 avis</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
+

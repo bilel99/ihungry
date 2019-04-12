@@ -54,6 +54,9 @@ class Media
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
+
+        // Init field
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
@@ -148,7 +151,7 @@ class Media
 
     public function getUploadRootDir()
     {
-        return __DIR__ . '../../public/uploads';
+        return dirname(dirname(__DIR__)).'/public/uploads';
     }
 
     public function getAbsolutePath()
@@ -183,7 +186,7 @@ class Media
     public function upload()
     {
         if ($this->file !== null) {
-            $this->file->move($this->getUploadRootDir(), $this->filename);
+            $this->file->move($this->getUploadRootDir(), $this->path);
             unset($this->file);
 
             if ($this->oldFile != null) {

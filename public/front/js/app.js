@@ -74,10 +74,7 @@ $(document).ready(function () {
         remove: '<a href="#"><i class="fas fa-minus-circle"></i></a>',
         duplicate: '<a href="#"><i class="fas fa-clone"></i></a>'
     });
-    // Category
-    $('.my-selector-category').collection({
 
-    });
 
 });
 

@@ -32,7 +32,7 @@ class VilleRepository extends ServiceEntityRepository
     public function searchByField($value)
     {
         return $this->createQueryBuilder('v')
-            ->andWhere('v.pays_id = '.self::DEFAULT_PAYS)
+            ->andWhere('v.pays = '.self::DEFAULT_PAYS)
             ->andWhere('v.libelle LIKE :val')
             ->setParameter('val', $value.'%')
             ->orderBy('v.id', 'ASC')

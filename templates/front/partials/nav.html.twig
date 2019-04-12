@@ -13,6 +13,9 @@
                 <li class="nav-item {% if current_menu is defined and current_menu == 'contact' %}active{% endif %}">
                     <a class="nav-link" href="{{ path('contact') }}">{{ 'nav.contact' | trans }}</a>
                 </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'restaurant' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('restaurant.index') }}">{{ 'nav.restaurant' | trans }}</a>
+                </li>
             </ul>
             <ul class="navbar-nav mt-2 mt-md-0">
                 {% if not app.user %}

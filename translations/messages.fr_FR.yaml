@@ -7,6 +7,7 @@ nav.logout: Déconnection
 nav.profil: Profil
 nav.admin: Admin
 nav.welcome: Welcome
+nav.restaurant: Restaurants
 #footer template
 footer.contact-me: Nous contacter
 footer.row1: Découvrez-nous
@@ -118,6 +119,8 @@ add.restaurant: Ajouter un restaurant
 restaurant.title: Restaurant
 restaurant.categorie: Dans qu'elle catégorie ce situe le restaurant
 restaurant.tag: Choisisez des mot-clé qui caractèrise le restaurant
+restaurant.media: Souhaitez-vous uploader des images sur ce restaurant
+restaurant.intro: Nos Restaurants
 
 #Admin
 admin.title: Dashboard

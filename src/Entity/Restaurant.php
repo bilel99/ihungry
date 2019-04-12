@@ -51,7 +51,7 @@ class Restaurant
     private $ville;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Media", inversedBy="restaurants")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", inversedBy="restaurants", cascade={"persist", "remove"})
      */
     private $media;
 
@@ -62,6 +62,7 @@ class Restaurant
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Categories", inversedBy="restaurants")
+     * @ORM\JoinTable(name="restaurant_categories")
      */
     private $categories;
 
@@ -221,6 +222,12 @@ class Restaurant
         return $this->categories;
     }
 
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
     public function addCategory(Categories $category): self
     {
         if (!$this->categories->contains($category)) {
@@ -238,6 +245,5 @@ class Restaurant
 
         return $this;
     }
-
 
 }

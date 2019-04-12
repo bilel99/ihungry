@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Categories;
 use App\Entity\Restaurant;
 use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -49,29 +50,22 @@ class RestaurantType extends AbstractType
                     'placeholder' => 'restaurant.adress'
                 ]
             ])
-            ->add('categorie', CollectionType::class, [
-                'entry_type' => RestaurantCategoriesType::class,
-                'entry_options' => [
-                    'label' => false
-                ],
-                'allow_add' => true,
-                'prototype' => true,
-                'by_reference' => false,
-                'allow_delete' => true,
+            ->add('categories', EntityType::class, [
+                'class' => Categories::class,
+                'choice_label' => 'title',
                 'label' => false,
+                'multiple' => true,
                 'attr' => [
-                    'class' => 'my-selector-category',
-                    'placeholder' => 'restaurant.categorie'
+                    'class' => 'form-control'
                 ]
             ])
             ->add('tag', EntityType::class, [
                 'class' => Tag::class,
-                'required' => true,
+                'choice_label' => 'tag',
                 'label' => false,
                 'multiple' => true,
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'restaurant.tag'
                 ]
             ])
             ->add('media', CollectionType::class, [
@@ -87,7 +81,6 @@ class RestaurantType extends AbstractType
                     'placeholder' => 'restaurant.media'
                 ]
             ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

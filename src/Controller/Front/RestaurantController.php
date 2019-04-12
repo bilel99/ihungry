@@ -8,7 +8,6 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\Categories;
 use App\Entity\Restaurant;
 use App\Entity\User;
 use App\Entity\Ville;
@@ -33,6 +32,21 @@ class RestaurantController extends AbstractController
     }
 
     /**
+     * @Route("/restaurant", name="restaurant.index")
+     * @return Response
+     */
+    public function index(): Response
+    {
+        $restaurants = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->getAll();
+        dump($restaurants);
+        return $this->render('front/restaurant/index.html.twig', [
+            'restaurants' => $restaurants,
+            'current_menu' => 'restaurant'
+        ]);
+    }
+
+    /**
      * @Route("/create-restaurant", name="restaurant.create")
      * @param Request $request
      * @return Response
@@ -45,29 +59,20 @@ class RestaurantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityVille = $this->getDoctrine()->getRepository(Ville::class);
-            $ville = $entityVille->findBy(['libelle' => $form['libelleVille']->getData()]);
-            $user = $this->getDoctrine()->getRepository(User::class)->find($request->getSession()->get('USER')->getId());
+            $ville = $this->getDoctrine()->getRepository(Ville::class)
+                ->findBy(['libelle' => $form['libelleVille']->getData()]);
+            $user = $this->getDoctrine()->getRepository(User::class)
+                ->find($request->getSession()->get('USER')->getId());
 
             $em = $this->getDoctrine()->getManager();
             $restaurant->setCreatedAt(new DateTime());
             $restaurant->setVille($ville[0]);
             $restaurant->setUser($user);
 
-            // Category
-            //$ca = $this->getDoctrine()->getRepository(Categories::class)
-             //   ->findBy(['title' => $form['categorie']->getData()[1]->getTitle()]);
-            //$restaurant->addCategorie($ca[0]);
-
-            // Tag
-            /*foreach ($form['tag']->getData() as $row) {
-                $restaurant->addTag($row);
-            }
             // Media
-            foreach ($form['media']->getData() as $row) {
-                $restaurant->addMedium($row);
-            }*/
-
+            foreach ($form['media']->getData() as $media) {
+                $restaurant->addMedium($media);
+            }
 
             $em->persist($restaurant);
             $em->flush();
@@ -78,7 +83,7 @@ class RestaurantController extends AbstractController
 
         return $this->render('front/restaurant/create.html.twig', [
             'form' => $form->createView(),
-            'current_menu' => 'restaurant'
+            'current_menu' => 'add-restaurant'
         ]);
     }
 

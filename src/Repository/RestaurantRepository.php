@@ -19,6 +19,24 @@ class RestaurantRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurant::class);
     }
 
+
+    /**
+     * Return All elements is table Restaurant - relations
+     */
+    public function getAll()
+    {
+        return $this->createQueryBuilder('r')
+            ->leftJoin('r.user', 'u')
+            ->leftJoin('r.ville', 'v')
+            ->leftJoin('r.categories', 'c')
+            ->leftJoin('r.tag', 't')
+            ->leftJoin('r.media', 'm')
+            ->addSelect('r', 'u', 'v', 'c', 't', 'm')
+            ->orderBy('r.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Restaurant[] Returns an array of Restaurant objects
     //  */
