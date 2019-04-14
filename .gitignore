@@ -59,3 +59,7 @@
 
 # Editor-based Rest Client
 .idea/httpRequests
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

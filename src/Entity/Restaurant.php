@@ -66,11 +66,28 @@ class Restaurant
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $price;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="restaurant")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notes", mappedBy="restaurant")
+     */
+    private $note;
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
         $this->tag = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +179,18 @@ class Restaurant
         return $this;
     }
 
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Media[]
      */
@@ -241,6 +270,68 @@ class Restaurant
     {
         if ($this->categories->contains($category)) {
             $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRestaurant() === $this) {
+                $comment->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notes[]
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
+    }
+
+    public function addNote(Notes $note): self
+    {
+        if (!$this->note->contains($note)) {
+            $this->note[] = $note;
+            $note->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Notes $note): self
+    {
+        if ($this->note->contains($note)) {
+            $this->note->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getRestaurant() === $this) {
+                $note->setRestaurant(null);
+            }
         }
 
         return $this;

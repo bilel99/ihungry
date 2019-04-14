@@ -60,13 +60,13 @@
                                 {# is image exist #}
                                 {% for media in restaurant.media %}
                                     {% if media is defined %}
-                                        <img src="{{ asset('uploads/') ~ media.path }}"
+                                        <img src="{{ vich_uploader_asset(media, 'file') | imagine_filter('thumb') }}"
                                              alt="{{ media.name ~ ' restaurant' }}">
                                     {% endif %}
                                 {% endfor %}
                                 {% if restaurant.media is null or restaurant.media is not defined or restaurant.media is empty %}
                                     {# default-image #}
-                                    <img src="{{ asset('front/images/default-image-restaurant.jpg') }}"
+                                    <img src="{{ asset('front/images/default-image-restaurant.jpg') | imagine_filter('thumb') }}"
                                          alt="default image restaurant">
                                 {% endif %}
                             </div>
@@ -80,7 +80,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="tag_price listing_price">10 € prix moy.</div>
+                            <div class="tag_price listing_price">{{ restaurant.price == null ? '?' : restaurant.price }} € prix moy.</div>
                         </div>
                         <div class="listing_content">
                             <div class="prop_location listing_location d-flex flex-row align-items-start justify-content-start">
@@ -93,11 +93,15 @@
                                 <ul class="d-flex flex-row align-items-center justify-content-start flex-wrap">
                                     <li class="property_area d-flex flex-row align-items-center justify-content-start">
                                         <i class="fas fa-sort-numeric-up fa-2x"></i>
-                                        <span>10 /10</span>
+                                        <span>
+                                            {{ avg.avg_note is null ? 'Inconnue' : avg.avg_note ~ ' /10' }}
+                                        </span>
                                     </li>
                                     <li class="d-flex flex-row align-items-center justify-content-start">
                                         <i class="fas fa-people-carry fa-2x"></i>
-                                        <span>23 avis</span>
+                                        <span>
+                                            {{ nbrComments.nbr_comment }} avis
+                                        </span>
                                     </li>
                                 </ul>
                             </div>

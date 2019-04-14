@@ -5,10 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
- * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable()
  */
 class Media
 {
@@ -34,6 +37,13 @@ class Media
      */
     private $path;
 
+    /**
+     * @var File
+     * @Assert\Image(
+     *     mimeTypes="image/*"
+     * )
+     * @Vich\UploadableField(mapping="restaurants_image", fileNameProperty="path")
+     */
     private $file;
 
     /**
@@ -57,6 +67,7 @@ class Media
 
         // Init field
         $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -132,85 +143,6 @@ class Media
     {
         $this->updated_at = $updated_at;
         return $this;
-    }
-
-
-
-    /*****************************************************
-     *
-     *                  Step Upload Image
-     *
-     ****************************************************/
-    /**
-     * @ORM\PostLoad()
-     */
-    public function postLoad()
-    {
-        $this->updated_at = new \DateTime();
-    }
-
-    public function getUploadRootDir()
-    {
-        return dirname(dirname(__DIR__)).'/public/uploads';
-    }
-
-    public function getAbsolutePath()
-    {
-        return $this->path === null ? null : $this->getUploadRootDir() . '/' . $this->path;
-    }
-
-    public function getAssetFilename()
-    {
-        return 'uploads/' . $this->path;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function preUpload()
-    {
-        $this->tempFile = $this->getAbsolutePath();
-        $this->oldFile = $this->getPath();
-        $this->updated_at = new \DateTime();
-
-        if ($this->file != null) {
-            $this->path = md5(uniqid()) . '.' . $this->file->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        if ($this->file !== null) {
-            $this->file->move($this->getUploadRootDir(), $this->path);
-            unset($this->file);
-
-            if ($this->oldFile != null) {
-                unlink($this->tempFile);
-            }
-        }
-    }
-
-    /**
-     * @ORM\PreRemove()
-     */
-    public function preRemoveUpload()
-    {
-        $this->tempFile = $this->getAbsolutePath();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removeUpload()
-    {
-        if (file_exists($this->tempFile)) {
-            unlink($this->tempFile);
-        }
     }
 
     /**

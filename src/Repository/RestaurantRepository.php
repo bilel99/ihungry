@@ -31,8 +31,38 @@ class RestaurantRepository extends ServiceEntityRepository
             ->leftJoin('r.categories', 'c')
             ->leftJoin('r.tag', 't')
             ->leftJoin('r.media', 'm')
-            ->addSelect('r', 'u', 'v', 'c', 't', 'm')
+            ->leftJoin('r.comments', 'comment')
+            ->leftJoin('r.note', 'n')
+            ->addSelect('r', 'u', 'v', 'c', 't', 'm', 'comment', 'n')
             ->orderBy('r.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * return average of note
+     * @return mixed
+     */
+    public function averageNote()
+    {
+        return $this->createQueryBuilder('r')
+            ->leftJoin('r.note', 'n')
+            ->select('avg(n.note) as avg_note')
+            ->where('r.id = n.restaurant')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * return number in comments
+     * @return mixed
+     */
+    public function countComments()
+    {
+        return $this->createQueryBuilder('r')
+            ->leftJoin('r.comments', 'c')
+            ->select('count(c.id) as nbr_comment')
+            ->where('r.id = c.restaurant')
             ->getQuery()
             ->getResult();
     }

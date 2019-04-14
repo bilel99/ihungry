@@ -37,11 +37,23 @@ class RestaurantController extends AbstractController
      */
     public function index(): Response
     {
+        // All Restaurants
         $restaurants = $this->getDoctrine()->getRepository(Restaurant::class)
             ->getAll();
-        dump($restaurants);
+
+        // Average the note to restaurant
+        $avg = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->averageNote();
+
+        // Nbr Comments
+        $countComments = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->countComments();
+
+
         return $this->render('front/restaurant/index.html.twig', [
             'restaurants' => $restaurants,
+            'avg' => $avg[0],
+            'nbrComments' => $countComments[0],
             'current_menu' => 'restaurant'
         ]);
     }

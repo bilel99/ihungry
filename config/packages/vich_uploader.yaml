@@ -1,0 +1,8 @@
+vich_uploader:
+  db_driver: orm
+
+  mappings:
+    restaurants_image:
+      uri_prefix: /uploads/restaurants
+      upload_destination: '%kernel.project_dir%/public/uploads/restaurants'
+      namer: Vich\UploaderBundle\Naming\UniqidNamer

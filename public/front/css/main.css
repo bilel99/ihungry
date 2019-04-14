@@ -221,7 +221,8 @@ main {
 }
 
 .listing_image_container {
-    height: 100%;
+    width: 100%;
+    height: auto;
     overflow: hidden;
 }
 
