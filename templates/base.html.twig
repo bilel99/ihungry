@@ -11,6 +11,8 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
 
     {% block stylesheets %}
+        <!-- jQuery -->
+        <script src="{{ asset('plugins/jQuery/jQuery.min.js') }}"></script>
         <!-- Bootstrap 4 -->
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/bootstrap.min.css') }}">
         <!-- Font awesome cdn -->
@@ -58,8 +60,6 @@
 </main>
 
 {% block javascripts %}
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jQuery/jQuery.min.js') }}"></script>
     <!-- jQuery UI -->
     <script src="{{ asset('plugins/jQuery/jquery-ui.min.js') }}"></script>
     <!-- Bootstrap -->

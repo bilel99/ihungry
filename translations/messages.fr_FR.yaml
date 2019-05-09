@@ -144,3 +144,5 @@ form.title: Titre de la catégorie
 delete-message: Suppression effectué avec succès!
 add.tag: Ajouter un tag
 tag.intro: Création d'un tag
+restaurant.create: Création d'un restaurant
+restaurant.relation: Les relations

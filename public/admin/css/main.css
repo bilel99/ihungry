@@ -16,7 +16,6 @@ main {
     margin-top: 56px; /* Debut de page après navbar */
 }
 
-
 /* Dashboard
 -------------------- */
 .ds-btn li {
@@ -37,6 +36,62 @@ main {
     width: 100%;
     display: inline-block;
     text-align: left;
+}
+
+/* FA Icons
+------------------------- */
+.icon-reader {
+    color: #2980b9;
+}
+
+.icon-edit {
+    color: #27ae60;
+}
+
+.icon-trash {
+    color: #e74c3c;
+}
+
+/* Panel With tab bootstrap
+------------------------- */
+.b-tab {
+    padding: 10%;
+    margin-top: -8%;
+}
+.b-tab #tabs{
+    background: #007b5e;
+    color: #eee;
+}
+.b-tab #tabs h6.section-title{
+    color: #eee;
+}
+.b-tab #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #0062cc;
+    background-color: transparent;
+    border-color: transparent transparent #f3f3f3;
+    border-bottom: 3px solid !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+.b-tab .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    color: #0062cc;
+    font-size: 16px;
+    font-weight: 600;
+}
+.b-tab .nav-link:hover {
+    border: none;
+}
+.b-tab thead{
+    background: #f3f3f3;
+    color: #333;
+}
+.b-tab a{
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
 }
 
 /* SideBar

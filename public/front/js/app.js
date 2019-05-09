@@ -12,16 +12,11 @@ ajax.deleteAccount();
 ajax.returnCity();
 
 $(document).ready(function () {
-    $(".dropdown").hover(
-        function () {
-            $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).slideDown("fast");
-            $(this).toggleClass('open');
-        },
-        function () {
-            $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).slideUp("fast");
-            $(this).toggleClass('open');
-        }
-    );
+    /**
+     * Hide navbar is scroll down
+     * Show navbar is scroll up
+     */
+    hideOnScrollNavBar();
 
     // Show form edit password / edit profil / edit secretpass /
     $('#profil-edit-secretpass').on('click', function (e) {
@@ -65,17 +60,6 @@ $(document).ready(function () {
     // Select2 Library
     $('select').select2();
 
-    // Collection-Symfony
-    // Media
-    $('.my-selector').collection({
-        up: '<a href="#"><i class="fas fa-arrow-circle-up"></i></a>',
-        down: '<a href="#"><i class="fas fa-arrow-circle-down"></i></a>',
-        add: '<a href="#"><i class="fas fa-plus-circle"></i></a>',
-        remove: '<a href="#"><i class="fas fa-minus-circle"></i></a>',
-        duplicate: '<a href="#"><i class="fas fa-clone"></i></a>'
-    });
-
-
 });
 
 /**
@@ -96,4 +80,28 @@ let activeCurrentPage = function () {
         // Active class
         $('.nav-item.' + attribute).addClass('active');
     }
+}
+
+/**
+ * Hide navbar is scroll down
+ * Show navbar is scroll up
+ */
+let hideOnScrollNavBar = function () {
+    let new_scroll_position = 0;
+    let last_scroll_position;
+    let navbar = document.getElementById("navbar");
+
+    window.addEventListener('scroll', function (e) {
+        last_scroll_position = window.scrollY;
+        // Scrolling down
+        if (new_scroll_position < last_scroll_position && last_scroll_position > 80) {
+            navbar.classList.remove("slideDown");
+            navbar.classList.add("slideUp");
+            // Scrolling up
+        } else if (new_scroll_position > last_scroll_position) {
+            navbar.classList.remove("slideUp");
+            navbar.classList.add("slideDown");
+        }
+        new_scroll_position = last_scroll_position;
+    });
 }

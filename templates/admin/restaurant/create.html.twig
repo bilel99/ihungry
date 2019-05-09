@@ -1,0 +1,77 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %}{{ 'admin.restaurant' | trans }}{% endblock %}
+{% block body %}
+
+    <h1>{{ 'restaurant.create' | trans }}</h1>
+
+    <div class="container">
+        <div class="col-12">
+            {# Form #}
+            {{ form_start(form) }}
+            <h3>{{ 'restaurant.create' | trans }}</h3>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.title) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.description) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.libelleVille) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.adress) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-4 col-4 offset-4">
+                    {{ form_row(form.price) }}
+                </div>
+            </div>
+
+            {# Form - relations #}
+            <h3>{{ 'restaurant.relation' | trans }}</h3>
+            <div class="row">
+                <div class="col-6">
+                    {{ form_row(form.categories) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(form.tag) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-4 col-4 offset-4">
+                    {% form_theme form 'jquery.collection.html.twig' %}
+                    {{ form_row(form.media) }}
+                </div>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block text-uppercase"
+                    type="submit">{{ 'contact.submit' | trans }}
+            </button>
+
+            {{ form_end(form) }}
+            <!-- url getVilles -->
+            <input type="hidden" class="url_ville"
+                   value="{{ absolute_url(path('getVilles', { 'libelleVille': 'PARIS' })) }}">
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function () {
+            // Collection-Symfony
+            $('.my-selector').collection({
+                up: '<a href="#"><i class="fas fa-arrow-circle-up"></i></a>',
+                down: '<a href="#"><i class="fas fa-arrow-circle-down"></i></a>',
+                add: '<a href="#"><i class="fas fa-plus-circle"></i></a>',
+                remove: '<a href="#"><i class="fas fa-minus-circle"></i></a>',
+                duplicate: '<a href="#"><i class="fas fa-clone"></i></a>'
+            });
+        });
+    </script>
+
+{% endblock %}
+

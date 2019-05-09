@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class RestaurantController extends AbstractController
+class ByRestaurantsController extends AbstractController
 {
 
     private $translator;
@@ -54,6 +54,21 @@ class RestaurantController extends AbstractController
             'restaurants' => $restaurants,
             'avg' => $avg[0],
             'nbrComments' => $countComments[0],
+            'current_menu' => 'restaurant'
+        ]);
+    }
+
+    /**
+     * @Route("/restaurant/{id}", name="restaurant.show")
+     * @param Restaurant $restaurant
+     * @return Response
+     */
+    public function show(Restaurant $restaurant)
+    {
+        $restaurant = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->getRestaurant($restaurant->getId());
+        return $this->render('front/restaurant/show.html.twig', [
+            'restaurant' => $restaurant,
             'current_menu' => 'restaurant'
         ]);
     }

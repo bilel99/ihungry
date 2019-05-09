@@ -76,11 +76,6 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $forgotPassword;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $remember_token;
 
     /**
@@ -107,6 +102,11 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="user")
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -187,18 +187,6 @@ class User implements UserInterface, \Serializable
     public function setSecretpass(?string $secretpass): self
     {
         $this->secretpass = $secretpass;
-
-        return $this;
-    }
-
-    public function getForgotPassword(): ?string
-    {
-        return $this->forgotPassword;
-    }
-
-    public function setForgotPassword(?string $forgotPassword): self
-    {
-        $this->forgotPassword = $forgotPassword;
 
         return $this;
     }
@@ -404,6 +392,18 @@ class User implements UserInterface, \Serializable
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

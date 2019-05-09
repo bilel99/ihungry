@@ -1,0 +1,45 @@
+{% extends 'base.admin.html.twig' %}
+{% block title %}{{ 'admin.restaurant' | trans }}{% endblock %}
+{% block body %}
+    <h1>{{ 'admin.restaurant' | trans }}</h1>
+
+    <!-- float button -->
+    <a href="{{ path('admin.create-restaurant') }}" class="float">
+        <i class="fas fa-plus my-float"></i>
+    </a>
+    <div class="label-container">
+        <div class="label-text">{{ 'add.restaurant' | trans }}</div>
+        <i class="fa fa-play label-arrow"></i>
+    </div>
+
+    <div class="offset-2 col-10">
+        <table class="table table-striped table-light table-responsive">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>title</th>
+                <th>description</th>
+                <th>adress</th>
+                <th>Created at</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            {% for row in restaurants %}
+                <tr id="restaurant_{{ row.id }}" data-id="{{ row.id }}">
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.title }}</td>
+                    <td>{{ row.description }}</td>
+                    <td>{{ row.adress }}</td>
+                    <td>{{ row.createdAt|date('j M Y') }}</td>
+                    <td>
+                        <a href="{{ path('admin.show-restaurant', {'id': row.id}) }}" class="icon-reader"><i class="fas fa-book-reader"></i></a>
+                        <a href="{{ path('admin.edit-restaurant', {'id': row.id }) }}" class="icon-edit"><i
+                                    class="fas fa-edit"></i></a>
+                        <a href="{{ url('admin.delete-restaurant', {'id':row.id}) }}" class="icon-trash"><i
+                                    class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

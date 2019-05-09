@@ -39,6 +39,24 @@ class RestaurantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getRestaurant(int $id)
+    {
+        return $this->createQueryBuilder('r')
+            ->leftJoin('r.user', 'u')
+            ->leftJoin('r.ville', 'v')
+            ->leftJoin('r.categories', 'c')
+            ->leftJoin('r.tag', 't')
+            ->leftJoin('r.media', 'm')
+            ->leftJoin('r.comments', 'comment')
+            ->leftJoin('r.note', 'n')
+            ->addSelect('r', 'u', 'v', 'c', 't', 'm', 'comment', 'n')
+            ->orderBy('r.created_at', 'DESC')
+            ->andWhere('r.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * return average of note
      * @return mixed

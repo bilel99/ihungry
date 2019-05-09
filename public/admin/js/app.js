@@ -7,8 +7,12 @@ ajax.editCategory();
 ajax.userToggleIsActive();
 ajax.userToggleIsDone();
 ajax.userChangeRole();
+ajax.returnCity();
 
 $(document).ready(function () {
+
+    // Select2 Library
+    $('select').select2();
 
     /**
      * redirect link to href url
