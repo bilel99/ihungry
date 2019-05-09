@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ 'restaurant.title' | trans }}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row list-restaurants col-12">
+            {% for row in restaurants %}
+                <div class="col-4">
+                    <div class="card">
+                        {# is image exist #}
+                        {% for media in row.media %}
+                            {% if media is defined %}
+                                <a href="{{ path('restaurant.show', {'id': row.id}) }}"><img src="{{ vich_uploader_asset(media, 'file') | imagine_filter('thumb') }}"
+                                     class="card-img" alt="{{ media.name ~ ' restaurant' }}"></a>
+                            {% endif %}
+                        {% endfor %}
+                        {% if row.media is null or row.media is not defined or row.media is empty %}
+                            {# default-image #}
+                            <a href="{{ path('restaurant.show', {'id': row.id}) }}"><img src="{{ asset('front/images/default-image-restaurant.jpg') | imagine_filter('thumb') }}"
+                                 class="card-img" alt="default image restaurant"></a>
+                        {% endif %}
+
+                        <div class="card-img-overlay">
+                            {% for categories in row.categories %}
+                                <span class="badge badge-pill badge-primary">{{ categories.title }}</span>
+                            {% endfor %}
+
+                            {% for t in row.tag %}
+                                <span class="badge badge-pill badge-primary">{{ t.tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">{{ row.title }}</h4>
+                            <small class="text-muted cat">
+                                <i class="fas fa-euro-sign"></i> {{ row.price }} prix moy.
+                                <i class="fas fa-grip-lines-vertical"></i>
+                                <i class="fas fa-people-carry"></i> 21 avis
+                            </small>
+                            <p class="card-text">{{ row.description|slice(0, 50) }}</p>
+                        </div>
+                        <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                            <div class="views">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ row.adress }}, {{ row.ville.libelle }} {{ row.ville.zipcode }}
+                            </div>
+                            <div class="stats">
+                                <i class="fas fa-sort-numeric-up"></i> 10 /10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

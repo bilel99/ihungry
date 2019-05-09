@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\Contact;
 use App\Entity\Faq;
+use App\Entity\Restaurant;
 use App\Form\ContactType;
 use App\Form\FaqType;
 use App\Notification\ContactNotification;
@@ -28,7 +29,10 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        $restaurants = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->findAll();
         return $this->render('front/home/index.html.twig', [
+            'restaurants' => $restaurants,
             'current_menu' => 'accueil'
         ]);
     }

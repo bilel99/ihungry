@@ -51,7 +51,7 @@ class Restaurant
     private $ville;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Media", inversedBy="restaurants")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media", inversedBy="restaurants", cascade={"persist", "remove"})
      */
     private $media;
 
@@ -62,14 +62,37 @@ class Restaurant
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Categories", inversedBy="restaurants")
+     * @ORM\JoinTable(name="restaurant_categories")
      */
     private $categories;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $price;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="restaurant")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notes", mappedBy="restaurant")
+     */
+    private $note;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function __construct()
     {
         $this->media = new ArrayCollection();
         $this->tag = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +184,18 @@ class Restaurant
         return $this;
     }
 
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?float $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Media[]
      */
@@ -221,6 +256,12 @@ class Restaurant
         return $this->categories;
     }
 
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
     public function addCategory(Categories $category): self
     {
         if (!$this->categories->contains($category)) {
@@ -239,5 +280,78 @@ class Restaurant
         return $this;
     }
 
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRestaurant() === $this) {
+                $comment->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notes[]
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
+    }
+
+    public function addNote(Notes $note): self
+    {
+        if (!$this->note->contains($note)) {
+            $this->note[] = $note;
+            $note->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Notes $note): self
+    {
+        if ($this->note->contains($note)) {
+            $this->note->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getRestaurant() === $this) {
+                $note->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
 
 }

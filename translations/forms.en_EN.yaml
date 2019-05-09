@@ -20,6 +20,7 @@ question: Avez-vous une question
 restaurant.title: Qu'elle est le nom du restaurant
 restaurant.description: Ajouter une description au restaurant
 restaurant.adress: A qu'elle adresse ce situe le restaurant
+restaurant.price: Le prix moyen du restaurant
 restaurant.tag: Souhaitez-vous tager ce restaurant
 restaurant.categorie: Qu'elle est la catégorie du restaurant
 restaurant.ville: Dans qu'elle ville ce situe le restaurant

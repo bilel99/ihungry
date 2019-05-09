@@ -16,6 +16,24 @@ main {
     margin-top: 56px; /* Debut de page après navbar */
 }
 
+a {
+    z-index: 10;
+}
+
+/** Animation
+-------------------------------------------------- */
+.slideUp {
+    -webkit-transform: translateY(-100px);
+    transform: translateY(-100px);
+    transition: transform .5s ease-out;
+}
+
+.slideDown {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    transition: transform .5s ease-out;
+}
+
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
@@ -54,16 +72,17 @@ main {
 -------------------------------------------------- */
 
 /* Center align the text within the three columns below the carousel */
-.marketing .col-lg-4 {
+.list-restaurants .col-4 {
+    margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
-.marketing h2 {
+.list-restaurants h2 {
     font-weight: 400;
 }
 
-.marketing .col-lg-4 p {
+.list-restaurants .col-4 p {
     margin-right: .75rem;
     margin-left: .75rem;
 }
@@ -175,200 +194,7 @@ main {
 
 /* Home page
 ------------------------- */
-/*search box css start here*/
-.search-sec {
-    padding: 2rem;
-    margin-top: -150px;
-}
 
-.search-slt {
-    display: block;
-    width: 100%;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    color: #55595c;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    height: calc(3rem + 2px) !important;
-    border-radius: 0;
-}
-
-.wrn-btn {
-    width: 100%;
-    font-size: 16px;
-    font-weight: 400;
-    text-transform: capitalize;
-    height: calc(3rem + 2px) !important;
-    border-radius: 0;
-}
-
-.search-title {
-    position: absolute;
-    bottom: 170px;
-    color: #fff;
-    font-style: italic;
-    width: 100%;
-    margin: 0 auto;
-    left: 25%;
-}
-
-.listing {
-    background: #ffffff;
-}
-
-.listing_image {
-    z-index: 1;
-}
-
-.listing_image_container {
-    height: 100%;
-    overflow: hidden;
-}
-
-.listing_image_container > img {
-    -webkit-transition: all 1600ms ease;
-    -moz-transition: all 1600ms ease;
-    -ms-transition: all 1600ms ease;
-    -o-transition: all 1600ms ease;
-    transition: all 1600ms ease;
-}
-
-.listing:hover .listing_image_container > img {
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    transform: scale(1.2);
-}
-
-.listing_price {
-    position: absolute;
-    left: 34px;
-    margin-top: -15px;
-}
-
-.tag_price_subtitle {
-    font-size: 0.7em;
-}
-
-.listing_location {
-    padding-left: 34px !important;
-    padding-top: 45px;
-    padding-bottom: 17px;
-    padding-right: 30px;
-    background: #f3f7fb;
-    margin-top: 0 !important;
-}
-
-.listing_location > img {
-    margin-top: -3px;
-}
-
-.listing_location a {
-    max-width: 230px;
-    margin-left: 24px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #2b2e35;
-    line-height: 1.875;
-}
-
-.listing_location a:hover {
-    color: #adc867;
-}
-
-.listing_info {
-    background: #f3f7fb;
-    padding-left: 29px;
-    padding-right: 15px;
-    padding-top: 18px;
-    padding-bottom: 17px;
-    margin-top: 2px;
-}
-
-.listing_info ul li {
-    margin-bottom: 10px;
-}
-
-.listing_info ul li:not(:last-of-type) {
-    margin-right: 28px;
-}
-
-.listing_info ul li span {
-    margin-left: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #6c7079;
-}
-
-.tags {
-    position: absolute;
-    top: 15px;
-    left: 19px;
-}
-
-.tag {
-    height: 35px;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.tag:not(:last-child) {
-    margin-right: 15px;
-}
-
-.tag a {
-    display: block;
-    height: 100%;
-    font-size: 11px;
-    font-weight: 600;
-    color: #ffffff;
-    text-transform: uppercase;
-    padding-left: 22px;
-    padding-right: 19px;
-    line-height: 35px;
-    letter-spacing: 0.2em;
-}
-
-.tag_house {
-    background: #adc867;
-}
-
-.tag_sale {
-    background: #55407d;
-}
-
-.tag_rent {
-    background: #588dfb;
-}
-
-.tag_price {
-    display: inline-block;
-    height: 37px;
-    padding-left: 27px;
-    padding-right: 26px;
-    background: #ff006c;
-    line-height: 37px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #ffffff;
-}
-
-.prop_location {
-    margin-top: 15px;
-    padding-left: 1px;
-}
-
-.prop_location img {
-    margin-top: -6px;
-}
-
-.prop_location span {
-    font-size: 16px;
-    font-weight: 600;
-    color: #6c7079;
-    margin-left: 25px;
-}
 
 /* SideBar
 ------------------------- */
@@ -446,6 +272,12 @@ a.float + div.label-container {
 a.float:hover + div.label-container {
     visibility: visible;
     opacity: 1;
+}
+
+/* Restaurant
+------------------------- */
+.show-restaurant {
+
 }
 
 /* Login / Register
@@ -658,7 +490,6 @@ section .section-title {
         margin-bottom: 10px;
     }
 }
-
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */

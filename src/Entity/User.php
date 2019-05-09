@@ -76,11 +76,6 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $forgotPassword;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $remember_token;
 
     /**
@@ -103,9 +98,20 @@ class User implements UserInterface, \Serializable
      */
     private $restaurants;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="user")
+     */
+    private $comments;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -181,18 +187,6 @@ class User implements UserInterface, \Serializable
     public function setSecretpass(?string $secretpass): self
     {
         $this->secretpass = $secretpass;
-
-        return $this;
-    }
-
-    public function getForgotPassword(): ?string
-    {
-        return $this->forgotPassword;
-    }
-
-    public function setForgotPassword(?string $forgotPassword): self
-    {
-        $this->forgotPassword = $forgotPassword;
 
         return $this;
     }
@@ -367,6 +361,49 @@ class User implements UserInterface, \Serializable
                 $restaurant->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

@@ -9,7 +9,10 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <title>{% block title %}Welcome!{% endblock %}</title>
+
     {% block stylesheets %}
+        <!-- jQuery -->
+        <script src="{{ asset('plugins/jQuery/jQuery.min.js') }}"></script>
         <!-- Bootstrap 4 -->
         <link rel="stylesheet" href="{{ asset('plugins/bootstrap/bootstrap.min.css') }}">
         <!-- Font awesome cdn -->
@@ -24,7 +27,6 @@
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="{{ asset('front/css/main.css') }}">
         <link rel="stylesheet" href="{{ asset('front/css/responsive.css') }}">
-
     {% endblock %}
 </head>
 <body>
@@ -56,23 +58,21 @@
     {% block body %}{% endblock %}
     {% include 'front/partials/footer.html.twig' %}
 </main>
+
 {% block javascripts %}
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jQuery/jQuery.min.js') }}"></script>
     <!-- jQuery UI -->
     <script src="{{ asset('plugins/jQuery/jquery-ui.min.js') }}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('plugins/bootstrap/bootstrap.min.js') }}"></script>
+    <!-- jQuery Symfony-Collection  -->
+    <script type="text/javascript" src={{ asset('plugins/jquery-symfony-collection/jquery.collection.js') }}/>
     <!-- Sweet Alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <!-- CDN Select2 library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
-    <!-- Symfony-Collection plugin -->
-    <script src="{{ asset('js/jquery.collection.js') }}"></script>
     <!-- custom javascript -->
     <script src="{{ asset('front/js/ajax.js') }}"></script>
     <script src="{{ asset('front/js/app.js') }}"></script>
-
 {% endblock %}
 </body>
 </html>

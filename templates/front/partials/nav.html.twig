@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav id="navbar" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="{{ path('homepage') }}">IHungry</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,6 +12,9 @@
                 </li>
                 <li class="nav-item {% if current_menu is defined and current_menu == 'contact' %}active{% endif %}">
                     <a class="nav-link" href="{{ path('contact') }}">{{ 'nav.contact' | trans }}</a>
+                </li>
+                <li class="nav-item {% if current_menu is defined and current_menu == 'restaurant' %}active{% endif %}">
+                    <a class="nav-link" href="{{ path('restaurant.index') }}">{{ 'nav.restaurant' | trans }}</a>
                 </li>
             </ul>
             <ul class="navbar-nav mt-2 mt-md-0">

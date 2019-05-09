@@ -8,7 +8,6 @@
 
 namespace App\Controller\Front;
 
-use App\Entity\Categories;
 use App\Entity\Restaurant;
 use App\Entity\User;
 use App\Entity\Ville;
@@ -22,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class RestaurantController extends AbstractController
+class ByRestaurantsController extends AbstractController
 {
 
     private $translator;
@@ -30,6 +29,48 @@ class RestaurantController extends AbstractController
     public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
+    }
+
+    /**
+     * @Route("/restaurant", name="restaurant.index")
+     * @return Response
+     */
+    public function index(): Response
+    {
+        // All Restaurants
+        $restaurants = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->getAll();
+
+        // Average the note to restaurant
+        $avg = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->averageNote();
+
+        // Nbr Comments
+        $countComments = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->countComments();
+
+
+        return $this->render('front/restaurant/index.html.twig', [
+            'restaurants' => $restaurants,
+            'avg' => $avg[0],
+            'nbrComments' => $countComments[0],
+            'current_menu' => 'restaurant'
+        ]);
+    }
+
+    /**
+     * @Route("/restaurant/{id}", name="restaurant.show")
+     * @param Restaurant $restaurant
+     * @return Response
+     */
+    public function show(Restaurant $restaurant)
+    {
+        $restaurant = $this->getDoctrine()->getRepository(Restaurant::class)
+            ->getRestaurant($restaurant->getId());
+        return $this->render('front/restaurant/show.html.twig', [
+            'restaurant' => $restaurant,
+            'current_menu' => 'restaurant'
+        ]);
     }
 
     /**
@@ -45,29 +86,20 @@ class RestaurantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityVille = $this->getDoctrine()->getRepository(Ville::class);
-            $ville = $entityVille->findBy(['libelle' => $form['libelleVille']->getData()]);
-            $user = $this->getDoctrine()->getRepository(User::class)->find($request->getSession()->get('USER')->getId());
+            $ville = $this->getDoctrine()->getRepository(Ville::class)
+                ->findBy(['libelle' => $form['libelleVille']->getData()]);
+            $user = $this->getDoctrine()->getRepository(User::class)
+                ->find($request->getSession()->get('USER')->getId());
 
             $em = $this->getDoctrine()->getManager();
             $restaurant->setCreatedAt(new DateTime());
             $restaurant->setVille($ville[0]);
             $restaurant->setUser($user);
 
-            // Category
-            //$ca = $this->getDoctrine()->getRepository(Categories::class)
-             //   ->findBy(['title' => $form['categorie']->getData()[1]->getTitle()]);
-            //$restaurant->addCategorie($ca[0]);
-
-            // Tag
-            /*foreach ($form['tag']->getData() as $row) {
-                $restaurant->addTag($row);
-            }
             // Media
-            foreach ($form['media']->getData() as $row) {
-                $restaurant->addMedium($row);
-            }*/
-
+            foreach ($form['media']->getData() as $media) {
+                $restaurant->addMedium($media);
+            }
 
             $em->persist($restaurant);
             $em->flush();
@@ -78,7 +110,7 @@ class RestaurantController extends AbstractController
 
         return $this->render('front/restaurant/create.html.twig', [
             'form' => $form->createView(),
-            'current_menu' => 'restaurant'
+            'current_menu' => 'add-restaurant'
         ]);
     }
 

@@ -33,6 +33,11 @@ class Tag
      */
     private $restaurants;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
@@ -96,6 +101,18 @@ class Tag
             $this->restaurants->removeElement($restaurant);
             $restaurant->removeTag($this);
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

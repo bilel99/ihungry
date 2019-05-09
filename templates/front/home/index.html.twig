@@ -39,40 +39,6 @@
             </div>
         </div>
 
-        <section class="search-sec">
-            <h1 class="search-title">{{ 'search.subtitle' | trans }}</h1>
-            <div class="container-fluid">
-                <form action="#" method="post" novalidate="novalidate">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                    <input type="text" class="form-control search-slt" placeholder="Nom du restaurant">
-                                </div>&nbsp;
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                    <input type="text" class="form-control search-slt" placeholder="Adresse / Quartier">
-                                </div>&nbsp;
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                    <select class="form-control search-slt" id="exampleFormControlSelect1">
-                                        <option>Catégorie</option>
-                                        <option>Example one</option>
-                                        <option>Example one</option>
-                                        <option>Example one</option>
-                                        <option>Example one</option>
-                                        <option>Example one</option>
-                                        <option>Example one</option>
-                                    </select>
-                                </div>&nbsp;
-                                <div class="col-lg-3 col-md-3 col-sm-12 p-2">
-                                    <button type="button" class="btn btn-danger wrn-btn">Rechercher</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </section>
-
         <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
@@ -83,119 +49,54 @@
         </a>
     </div>
 
-    <div class="container marketing">
-        <!-- list of restaurant -->
-        <div class="col-lg-4">
-            <div class="listing">
-                <div class="listing_image">
-                    <div class="listing_image_container">
-                        <img src="{{ asset('front/images/image-restaurant1.jpg') }}" alt="">
+    <div class="list-restaurants row col-12">
+        {% for row in restaurants %}
+            <div class="col-4">
+                <div class="card">
+                    {# is image exist #}
+                    {% for media in row.media %}
+                        {% if media is defined %}
+                            <a href="{{ path('restaurant.show', {'id': row.id}) }}"><img src="{{ vich_uploader_asset(media, 'file') | imagine_filter('thumb') }}"
+                                 class="card-img" alt="{{ media.name ~ ' restaurant' }}"></a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if row.media is null or row.media is not defined or row.media is empty %}
+                        {# default-image #}
+                        <a href="{{ path('restaurant.show', {'id': row.id}) }}"><img src="{{ asset('front/images/default-image-restaurant.jpg') | imagine_filter('thumb') }}"
+                             class="card-img" alt="default image restaurant"></a>
+                    {% endif %}
+
+                    <div class="card-img-overlay">
+                        {% for categories in row.categories %}
+                            <span class="badge badge-pill badge-primary">{{ categories.title }}</span>
+                        {% endfor %}
+
+                        {% for t in row.tag %}
+                            <span class="badge badge-pill badge-primary">{{ t.tag }}</span>
+                        {% endfor %}
                     </div>
-                    <div class="tags d-flex flex-row align-items-start justify-content-start flex-wrap">
-                        <div class="tag tag_house"><a href="listings.html">name</a></div>
-                        <div class="tag tag_sale"><a href="listings.html">spécialité</a></div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ row.title }}</h4>
+                        <small class="text-muted cat">
+                            <i class="fas fa-euro-sign"></i> {{ row.price }} prix moy.
+                            <i class="fas fa-grip-lines-vertical"></i>
+                            <i class="fas fa-people-carry"></i> 21 avis
+                        </small>
+                        <p class="card-text">{{ row.description|slice(0, 50) }}</p>
                     </div>
-                    <div class="tag_price listing_price">10 € prix moy.</div>
+                    <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                        <div class="views">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ row.adress }}, {{ row.ville.libelle }} {{ row.ville.zipcode }}
+                        </div>
+                        <div class="stats">
+                            <i class="fas fa-sort-numeric-up"></i> 10 /10
+                        </div>
+                    </div>
                 </div>
-                <div class="listing_content">
-                    <div class="prop_location listing_location d-flex flex-row align-items-start justify-content-start">
-                        <i class="fas fa-map-marker-alt fa-2x"></i>
-                        <a href="single.html">&nbsp;280 Doe Meadow Drive Landover, MD 20785</a>
-                    </div>
-                    <div class="listing_info">
-                        <ul class="d-flex flex-row align-items-center justify-content-start flex-wrap">
-                            <li class="property_area d-flex flex-row align-items-center justify-content-start">
-                                <i class="fas fa-sort-numeric-up fa-2x"></i>
-                                <span>10 /10</span>
-                            </li>
-                            <li class="d-flex flex-row align-items-center justify-content-start">
-                                <i class="fas fa-people-carry fa-2x"></i>
-                                <span>23 avis</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
-        </div>
-
-        <hr class="featurette-divider">
-        <!-- TOP restaurant -->
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">First featurette heading. <span
-                            class="text-muted">It'll blow your mind.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                    tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
-                     alt="Generic placeholder image">
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading">Oh yeah, it's that good. <span
-                            class="text-muted">See for yourself.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                    tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
-                     alt="Generic placeholder image">
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-                <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
-                    euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
-                    tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"
-                     alt="Generic placeholder image">
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
-        <!-- Presentation of the site -->
-        <div class="row">
-            <div class="col-lg-4">
-                <i class="fas fa-utensils fa-10x"></i>
-                <h2>Le principe du site web</h2>
-                <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
-                    vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-                    cursus magna.</p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <i class="fas fa-people-carry fa-10x"></i>
-                <h2>Le site vie grâce à vous</h2>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                    mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                    condimentum nibh.</p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <i class="fas fa-users fa-10x"></i>
-                <h2>Soyez toujours plus nombreux</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-                    porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-                    ut fermentum massa justo sit amet risus.</p>
-            </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
-
-        <hr class="featurette-divider">
-        <!-- sondage dynamique -->
-
-
-    </div><!-- /.container -->
+        {% endfor %}
+    </div>
 
 
 {% endblock %}

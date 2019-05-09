@@ -2,6 +2,34 @@ class Ajax {
 
 
     /**
+     * Return City
+     * @returns {Promise<void>}
+     */
+    returnCity = async function () {
+        $('.restaurant_libelleVille').keyup(function () {
+            if ($(this).val().length === 5) {
+                // On récupére l'url à travers un champ hidden du formulaire
+                let urlVille = $('.url_ville').val();
+                // On traite l'url afin de ne garder que l'url sans le paramètre
+                let traitementUrlVille = urlVille.substr(0, urlVille.length - 5);
+                $.ajax({
+                    url: traitementUrlVille + $(this).val(),
+                    type: 'GET',
+                    success: function (result) {
+                        $('.restaurant_libelleVille').val(result.libelle_ville);
+                    }, error: function () {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Error Ajax Request!'
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Create category
      * @returns {Promise<void>}
      */
