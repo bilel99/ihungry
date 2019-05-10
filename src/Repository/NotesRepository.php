@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Notes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,16 @@ class NotesRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Notes::class);
+    }
+
+    public function isCommentRestaurant($user)
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.user = :user')
+            ->setParameter('user', $user)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

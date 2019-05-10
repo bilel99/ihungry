@@ -38,6 +38,17 @@ class Notes
      */
     private $restaurant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="notes")
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime('now'));
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +98,18 @@ class Notes
     public function setRestaurant(?Restaurant $restaurant): self
     {
         $this->restaurant = $restaurant;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

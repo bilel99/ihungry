@@ -99,7 +99,7 @@ class User implements UserInterface, \Serializable
     private $restaurants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="user", cascade={"persist"})
      */
     private $comments;
 
@@ -108,10 +108,16 @@ class User implements UserInterface, \Serializable
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notes", mappedBy="user")
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->restaurants = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
 
@@ -404,6 +410,37 @@ class User implements UserInterface, \Serializable
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notes[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Notes $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Notes $note): self
+    {
+        if ($this->notes->contains($note)) {
+            $this->notes->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getUser() === $this) {
+                $note->setUser(null);
+            }
+        }
 
         return $this;
     }
